@@ -22,9 +22,9 @@ test.only('check Order details 2' ,async ({page})=>{
     await allProductsNamesLoad.first().waitFor();
     
     const allProductNames = await allProductsNamesLoad.allTextContents();
-    await console.log(...allProductNames);
+    console.log(...allProductNames);
     const allProductsCount  = await allProductsNamesLoad.count();
-    await console.log(allProductsCount);
+    console.log(allProductsCount);
     
     for(let i =0; i < allProductsCount ; i++){
         
@@ -40,16 +40,39 @@ test.only('check Order details 2' ,async ({page})=>{
     await page.locator("[routerlink*='cart']").click();
     await page.locator("div li").last().waitFor();
     const cartProductNames = await page.locator(`h3:has-text('${iReqProductName2}')`).isVisible();
-    await console.log(cartProductNames);
-    await expect(cartProductNames).toBeTruthy();
+    console.log(cartProductNames);
+    expect(cartProductNames).toBeTruthy();
 
     await page.locator("text=Checkout").click();
     await page.locator('div.field.small >> input[class="input txt"]').fill("879");
+    await page.getByRole('textbox').nth(2).fill("Test Member");
 
     await page.locator("[name='coupon']").fill("rahulshettyacademy");
     await page.locator("[type='submit']").click();
+    await page.getByRole('textbox', { name: 'Select Country' }).pressSequentially('ind');
+    //  await page.pause();
+
+    //Method 1 - General 
+    // await page.locator(".ta-results").waitFor();
+    // const drawdownOptions = await page.locator(".ta-results button");
+    // const optionsCount = await drawdownOptions.count();
+    // console.log(`options  : ${optionsCount}`);
+    // for(let i =0; i < optionsCount; i++){
+    //     const selValue = await drawdownOptions.nth(i).textContent();
+    //     if(selValue === ' India'){
+    //         await drawdownOptions.nth(i).click();
+    //         break;
+    //     }
+    // }
+    //Method 2 - Advanced
+    const  ddcontainer  = await page.locator(".ta-results");
+    await ddcontainer.waitFor();
+    const reqOption = ddcontainer.getByText(" India" , {exact : true});
+    await reqOption.click();
 
     // await page.pause();
+        await page.getByText('Place Order').click();
+
 
 
     //cart - return all items in cart & check the cart items 
