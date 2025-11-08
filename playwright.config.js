@@ -1,20 +1,14 @@
-import {
-  defineConfig,
-  devices
-} from '@playwright/test';
-
-
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   timeout: 40 * 1000,
-  reporter: 'html',
+  reporter: "html",
 
   use: {
-    browserName: 'chromium',
-    headless: false
-  }
-
+    browserName: "chromium",
+    headless: true,
+  },
 
   /* Run your local dev server before starting the tests */
   // webServer: {
