@@ -1,7 +1,7 @@
 
 const {test, expect} = require("@playwright/test")
 
-test.only('check Order details 2' ,async ({page})=>{
+test('check Order details 2' ,async ({page})=>{
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
 
     // variable declaration
