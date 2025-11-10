@@ -2,16 +2,16 @@ const { test, expect, request } = require("@playwright/test");
 const { API_utils } = require("./utils/API_utils");
 
 const loginPayLoadData = {
-  userEmail: "test3kfnv@test.com",
+  userEmail: "test9012@test.com",
   userPassword: "Password@123",
 };
 const createOrderPayLoadData = {
-  orders: [{ country: "Cuba", productOrderedId: "68a961959320a140fe1ca57e" }],
+  orders: [{ country: "India", productOrderedId: "68a961719320a140fe1ca57c" }],
 };
 const iphone13proPID = "68a961959320a140fe1ca57e";
 const addidasShoePD = "68a961719320a140fe1ca57c";
 
-let response;
+let response = {};
 
 test.beforeAll(async () => {
   const api_context = await request.newContext();
@@ -20,8 +20,9 @@ test.beforeAll(async () => {
     loginPayLoadData,
     createOrderPayLoadData
   );
-  await API_Utils1.Logintokengenerator();
-  response = API_Utils1.createOrder(createOrderPayLoadData);
+  response.token = await API_Utils1.Logintokengenerator();
+  response = await API_Utils1.createOrder(createOrderPayLoadData);
+  console.log(`Order Placed : ${response.orderId}`);
 });
 
 test("Order", async ({ page }) => {

@@ -10,7 +10,7 @@ class API_utils {
     });
     const loginJSON_res = await LoginAPI_res.json();
     const token = loginJSON_res.token;
-    console.log(token);
+    // console.log(token);
     return token;
   }
   async createOrder(createOrderPayLoadData) {
