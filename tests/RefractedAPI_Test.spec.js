@@ -30,10 +30,10 @@ test("Order", async ({ page }) => {
     window.localStorage.setItem("token", value);
   }, response.token);
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
-  await page.getByRole("button", { name: "  ORDERS" }).click();
-  // await page.pause();
-  let allOrderId = await page.locator("tbody tr th").allTextContents();
-  console.log(allOrderId);
-  console.log(allOrderId.includes(response.orderId));
-  console.log(allOrderId.indexOf(response.orderId));
+  // await page.getByRole("button", { name: "  ORDERS" }).click();
+  await page.pause();
+  // let allOrderId = await page.locator("tbody tr th").allTextContents();
+  // console.log(allOrderId);
+  // console.log(allOrderId.includes(response.orderId));
+  // console.log(allOrderId.indexOf(response.orderId));
 });

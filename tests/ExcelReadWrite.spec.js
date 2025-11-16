@@ -40,7 +40,7 @@ async function FindCellCoOrdinated(filePath, sheetName, searchText) {
   });
 }
 
-test.only("Excel Write", async ({ page }) => {
+test("Excel Write", async ({ page }) => {
   await page.goto(
     "https://rahulshettyacademy.com/upload-download-test/index.html"
   );
@@ -60,8 +60,11 @@ test.only("Excel Write", async ({ page }) => {
   );
   await page.locator("#fileinput").click();
   await page.locator("#fileinput").setInputFiles(dwdfilePath);
-  const desiredText = page.getByText(searchText);
+  await page.getByText(searchText).waitFor();
+  const desiredText = await page.getByText(searchText);
   const reqRow = await page.getByRole("row").filter({ has: desiredText });
-  await expect(reqRow.locator("#cell-4-undefined")).toContain(replaceText);
+  await expect(reqRow.locator("#cell-4-undefined").textContent()).toContain(
+    replaceText
+  );
   // await page.pause();
 });

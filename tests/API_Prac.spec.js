@@ -38,7 +38,7 @@ test.beforeAll(async () => {
   console.log(orderId);
 });
 
-test.only("API for Login", async ({ page }) => {
+test("API for Login", async ({ page }) => {
   await page.addInitScript((value) => {
     window.localStorage.setItem("token", value);
   }, token);
