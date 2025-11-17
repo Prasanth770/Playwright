@@ -1,7 +1,7 @@
 const { test, expect } = require("@playwright/test");
 const { PageOjectsManager } = require("../pageObjects/PageObjectsManager");
 
-test.only("Order Products", async ({ page }) => {
+test("Order Products", async ({ page }) => {
   //Variable declaration
   const iURL = "https://rahulshettyacademy.com/client/#/auth/login";
   const iUserName = "test3kfnv@test.com";

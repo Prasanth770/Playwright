@@ -1,0 +1,26 @@
+[
+  {
+    "iURL": "https://rahulshettyacademy.com/client/#/auth/login",
+    "iUserName": "test3kfnv@test.com",
+    "ipwd": "Password@123",
+    "iReqProductName1": "iphone 13 pro",
+    "iReqProductName2": "ZARA COAT 3",
+    "icountry": "Cuba"
+  },
+  {
+    "iURL": "https://rahulshettyacademy.com/client/#/auth/login",
+    "iUserName": "test3kfnv@test.com",
+    "ipwd": "Password@123",
+    "iReqProductName1": "ZARA COAT 3",
+    "iReqProductName2": "ZARA COAT 3",
+    "icountry": "Cuba"
+  },
+  {
+    "iURL": "https://rahulshettyacademy.com/client/#/auth/login",
+    "iUserName": "test3kfnv@test.com",
+    "ipwd": "Password@123",
+    "iReqProductName1": "ADIDAS ORIGINAL",
+    "iReqProductName2": "ZARA COAT 3",
+    "icountry": "Cuba"
+  }
+]
