@@ -4,7 +4,7 @@ const loginPayLoadData = {
   userPassword: "Password@123",
 };
 const createOrderPayLoadData = {
-  orders: [{ country: "Cuba", productOrderedId: "68a961719320a140fe1ca57c" }],
+  orders: [{ country: "Cuba", productOrderedId: "68a961959320a140fe1ca57e" }],
 };
 let token;
 let orderId;
@@ -38,7 +38,7 @@ test.beforeAll(async () => {
   console.log(orderId);
 });
 
-test.only("API for Login", async ({ page }) => {
+test("API for Login", async ({ page }) => {
   await page.addInitScript((value) => {
     window.localStorage.setItem("token", value);
   }, token);

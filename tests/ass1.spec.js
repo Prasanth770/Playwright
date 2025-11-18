@@ -3,7 +3,7 @@ const { test } = require("@playwright/test");
 test("Create a new User & Login", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
   const title = await page.title();
-  const email = "test3kfnv1@test.com";
+  const email = "test9012@test.com";
   const pwd = "Password@123";
   console.log("Page Tittle ", title);
 
