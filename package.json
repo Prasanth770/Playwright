@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "report:clean": "rm -rf allure-results allure-report",
+    "report:generate": "npx allure generate ./allure-results -o ./allure-report",
+    "report:open": "npx allure open ./allure-report",
+    "test:fresh": "npm run report:clean && npm run test && npm run report:generate && npx allure open ./allure-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -36,5 +36,5 @@ test("Order Products", async ({ page }) => {
   await checkOutPage.SelectCountry(" India");
   await checkOutPage.PlaceOrder();
 
-  await page.pause();
+  // await page.pause();
 });

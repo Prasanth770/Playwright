@@ -3,8 +3,18 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
   timeout: 40 * 1000,
-  reporter: "html",
-  // reporter: [["line"], ["allure-playwright"]],
+  // reporter: "html",
+  reporter: [
+    ["line"], // Console output
+    [
+      "allure-playwright",
+      {
+        detail: true,
+        outputFolder: "allure-results",
+        suiteTitle: false,
+      },
+    ],
+  ],
   workers: 5,
   retries: 1,
   projects: [
@@ -14,7 +24,7 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         screenshot: "on",
         trace: "on",
-        video: "off",
+        video: "retain-on-failure",
       },
     },
   ],
