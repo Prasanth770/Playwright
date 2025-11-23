@@ -7,7 +7,7 @@
     "test": "npx playwright test",
     "Smoke": "npx playwright test --grep @Smoke",
     "report:clean": "rm -rf allure-results allure-report",
-    "report:generate": "npx allure generate ./allure-results -o ./allure-report",yntr
+    "report:generate": "npx allure generate ./allure-results -o ./allure-report",
     "report:open": "npx allure open ./allure-report",
     "test:fresh": "npm run report:clean && npm run test && npm run report:generate && npx allure open ./allure-report"
   },
