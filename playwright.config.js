@@ -21,7 +21,7 @@ export default defineConfig({
     {
       name: "Chrome",
       use: {
-        headless: false,
+        headless: true,
         ...devices["Desktop Chrome"],
         screenshot: "on",
         trace: "on",
