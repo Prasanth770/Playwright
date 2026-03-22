@@ -20,14 +20,14 @@ test("check Order details 2", async ({ page }) => {
   const allProductsNamesLoad = page.locator("div.card-body b");
   await allProductsNamesLoad.first().waitFor();
 
-//   const allProductNames = await allProductsNamesLoad.allTextContents();
-//   console.log(...allProductNames);
-//   const allProductsCount = await allProductsNamesLoad.count();
-//   console.log(allProductsCount);
+  const allProductNames = await allProductsNamesLoad.allTextContents();
+  console.log(...allProductNames);
+  const allProductsCount = await allProductsNamesLoad.count();
+  console.log(allProductsCount);
   console.log(
     `All Products - (${await allProductsNamesLoad.count()} ) => ${(
       await allProductsNamesLoad.allTextContents()
-    ).join(" | ")}`
+    ).join(" | ")}`,
   );
 
   for (let i = 0; i < allProductsCount; i++) {

@@ -1,0 +1,50 @@
+
+#for mac
+services:
+  # --- THE HUB (Official Image works on M1/M2) ---
+  selenium-hub:
+    image: selenium/hub:latest
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+
+  # --- CHROMIUM NODE (Must use 'seleniarm' on Mac) ---
+  chromium:
+    image: seleniarm/node-chromium:latest
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=2
+
+  # --- FIREFOX NODE (Must use 'seleniarm' on Mac) ---
+  firefox:
+    image: seleniarm/node-firefox:latest
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=2
+
+  # --- VIDEO RECORDER (Official Image works on M1/M2) ---
+  selenium-video:
+    image: selenium/video:latest
+    container_name: selenium-video
+    volumes:
+      - ./videos:/videos
+    depends_on:
+      - selenium-hub
+    environment:
+      - DISPLAY_CONTAINER_NAME=selenium-hub
+      - FILE_NAME_TEMPLATE=TestVideo-${browserName:-unknown}
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443

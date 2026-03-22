@@ -21,11 +21,12 @@ export default defineConfig({
     {
       name: "Chrome",
       use: {
+        // storageState: "path",
         headless: true,
         ...devices["Desktop Chrome"],
-        screenshot: "on",
-        trace: "on",
-        video: "retain-on-failure",
+        screenshot: "off",
+        // trace: "on",
+        // video: "retain-on-failure",
       },
     },
   ],

@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeScript OOP — Complete Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #05080f;
+  --bg2:     #080d18;
+  --bg3:     #0c1220;
+  --surface: #111827;
+  --surf2:   #1a2436;
+  --surf3:   #222f45;
+  --border:  #1e2d45;
+  --border2: #2a3f60;
+  --text:    #e2eaf8;
+  --text2:   #8fa8cc;
+  --text3:   #4a6080;
+  --blue:    #3b82f6;
+  --blue2:   #60a5fa;
+  --blue3:   #93c5fd;
+  --cyan:    #06b6d4;
+  --cyan2:   #22d3ee;
+  --teal:    #14b8a6;
+  --green:   #22c55e;
+  --green2:  #4ade80;
+  --yellow:  #eab308;
+  --yellow2: #facc15;
+  --orange:  #f97316;
+  --orange2: #fb923c;
+  --pink:    #ec4899;
+  --pink2:   #f472b6;
+  --red:     #ef4444;
+  --red2:    #f87171;
+  --purple:  #a855f7;
+  --purple2: #c084fc;
+  --neon:    #00ff88;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:5rem 4rem;
+  position:relative;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(59,130,246,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(6,182,212,0.05) 0%, transparent 60%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.hero-scanline{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    0deg,transparent,transparent 2px,
+    rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px
+  );
+  pointer-events:none;
+}
+.hero-corner{
+  position:absolute;right:0;top:0;bottom:0;width:45%;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0.04;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22rem;
+  color:var(--blue3);
+  user-select:none;
+  letter-spacing:-0.05em;
+}
+.hero-content{position:relative;z-index:2;max-width:700px;}
+.hero-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(59,130,246,0.1);
+  border:1px solid rgba(59,130,246,0.3);
+  color:var(--blue3);
+  font-family:'DM Mono',monospace;
+  font-size:0.7rem;
+  padding:5px 14px;border-radius:100px;
+  margin-bottom:1.75rem;
+  text-transform:uppercase;letter-spacing:0.12em;
+  animation:fadeUp .6s ease both;
+}
+.hero-chip::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--neon);animation:blink 1.5s ease infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(4rem,10vw,9rem);
+  line-height:.9;
+  letter-spacing:.02em;
+  margin-bottom:1.5rem;
+  animation:fadeUp .7s ease both;
+}
+.hero h1 .line1{display:block;color:var(--text);}
+.hero h1 .line2{
+  display:block;
+  background:linear-gradient(90deg,var(--blue2),var(--cyan2),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-desc{
+  font-size:1.05rem;color:var(--text2);
+  max-width:520px;margin-bottom:2rem;
+  animation:fadeUp .8s ease both;
+  line-height:1.8;
+}
+.hero-stats{
+  display:flex;gap:2.5rem;flex-wrap:wrap;
+  animation:fadeUp .9s ease both;
+}
+.stat .n{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.8rem;line-height:1;
+  color:var(--cyan2);display:block;
+}
+.stat .l{
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem;text-transform:uppercase;
+  letter-spacing:.15em;color:var(--text3);
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── STICKY NAV ── */
+.nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(5,8,15,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;white-space:nowrap;
+  padding:0 1.5rem;
+}
+.nav-inner a{
+  font-family:'DM Mono',monospace;
+  font-size:.65rem;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--text3);
+  text-decoration:none;
+  padding:13px 14px;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:all .2s;
+}
+.nav-inner a:hover{color:var(--cyan2);border-bottom-color:var(--cyan2);}
+
+/* ── LAYOUT ── */
+.container{max-width:1100px;margin:0 auto;padding:0 2.5rem;}
+section{padding:5rem 0;border-bottom:1px solid var(--border);}
+section:nth-child(even){background:var(--bg2);}
+
+.sec-tag{
+  font-family:'DM Mono',monospace;font-size:.62rem;
+  text-transform:uppercase;letter-spacing:.18em;
+  color:var(--cyan2);margin-bottom:.5rem;
+  display:flex;align-items:center;gap:8px;
+}
+.sec-tag::before{content:'//';opacity:.5;}
+h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.2rem,5vw,3.8rem);
+  letter-spacing:.04em;line-height:1;
+  margin-bottom:1.25rem;color:var(--text);
+}
+h2 span{color:var(--cyan2);}
+h3{
+  font-family:'DM Sans',sans-serif;
+  font-size:1.2rem;font-weight:600;
+  margin:2.5rem 0 .75rem;color:var(--text);
+}
+p{color:var(--text2);margin-bottom:1rem;}
+strong{color:var(--text);font-weight:600;}
+
+/* ── CODE BLOCKS ── */
+.cb{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;
+  margin:1.5rem 0;
+  box-shadow:0 4px 24px rgba(0,0,0,.4);
+}
+.cb-head{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:9px 14px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+.dots{display:flex;gap:5px;}
+.dots span{width:9px;height:9px;border-radius:50%;}
+.dr{background:#ff5f57}.dy{background:#ffbd2e}.dg{background:#28ca41}
+.cb-label{
+  font-family:'DM Mono',monospace;
+  font-size:.65rem;color:var(--text3);
+  letter-spacing:.05em;
+}
+.cb pre{
+  padding:1.25rem 1.5rem;
+  overflow-x:auto;
+  font-family:'DM Mono',monospace;
+  font-size:.8rem;line-height:1.8;
+  color:var(--text);
+  tab-size:2;
+}
+/* TS syntax highlight */
+.kw{color:#f472b6}
+.ty{color:#60a5fa}
+.fn{color:#34d399}
+.st{color:#fbbf24}
+.cm{color:#374d66;font-style:italic}
+.nm{color:#f97316}
+.op{color:#64748b}
+.de{color:#c084fc}
+.pr{color:#22d3ee}
+.bl{color:#f87171}
+.ln{display:inline-block;width:1.8rem;color:var(--text3);opacity:.4;user-select:none;text-align:right;margin-right:1rem;font-size:.72rem}
+
+/* ── CALLOUTS ── */
+.callout{
+  border-radius:10px;padding:1rem 1.4rem;
+  margin:1.5rem 0;display:flex;gap:12px;
+  align-items:flex-start;border:1px solid;
+}
+.ci{font-size:1.1rem;flex-shrink:0;line-height:1.7}
+.cb2{flex:1}
+.cb2 strong{
+  font-family:'DM Mono',monospace;font-size:.68rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  display:block;margin-bottom:3px;
+}
+.cb2 p{font-size:.88rem;margin:0}
+
+.callout.tip{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.25)}
+.callout.tip .cb2 strong{color:var(--green2)}
+.callout.note{background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.25)}
+.callout.note .cb2 strong{color:var(--blue3)}
+.callout.warn{background:rgba(234,179,8,.07);border-color:rgba(234,179,8,.25)}
+.callout.warn .cb2 strong{color:var(--yellow2)}
+.callout.danger{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.25)}
+.callout.danger .cb2 strong{color:var(--red2)}
+.callout.mentor{background:rgba(168,85,247,.07);border-color:rgba(168,85,247,.25)}
+.callout.mentor .cb2 strong{color:var(--purple2)}
+
+/* ── CONCEPT CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem;margin:2rem 0}
+.ccard{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1.4rem;
+  position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s,box-shadow .2s;
+}
+.ccard::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  border-radius:2px 2px 0 0;
+}
+.ccard.c-blue::after{background:var(--blue)}
+.ccard.c-cyan::after{background:var(--cyan)}
+.ccard.c-green::after{background:var(--green)}
+.ccard.c-orange::after{background:var(--orange)}
+.ccard.c-pink::after{background:var(--pink)}
+.ccard.c-purple::after{background:var(--purple)}
+.ccard.c-yellow::after{background:var(--yellow)}
+.ccard.c-teal::after{background:var(--teal)}
+.ccard:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.ccard-icon{font-size:1.8rem;margin-bottom:.75rem;display:block}
+.ccard h4{font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;margin-bottom:.4rem;color:var(--text)}
+.ccard p{font-size:.8rem;color:var(--text2);margin:0}
+
+/* ── PILLAR GRID ── */
+.pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin:2rem 0}
+@media(max-width:640px){.pillars{grid-template-columns:1fr}}
+.pillar{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:1.75rem;position:relative;
+  overflow:hidden;
+}
+.pillar::before{
+  content:attr(data-n);
+  position:absolute;right:1rem;top:.5rem;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:5rem;line-height:1;
+  opacity:.06;color:white;
+}
+.pillar-icon{font-size:2rem;margin-bottom:.75rem}
+.pillar h3{margin-top:0;font-size:1.1rem}
+.pillar p{font-size:.85rem}
+.pillar.p1{border-top:3px solid var(--blue)}
+.pillar.p2{border-top:3px solid var(--cyan)}
+.pillar.p3{border-top:3px solid var(--pink)}
+.pillar.p4{border-top:3px solid var(--purple)}
+
+/* ── COMPARISON TABLE ── */
+.tbl{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.85rem}
+.tbl th{
+  background:var(--surf2);color:var(--cyan2);
+  padding:11px 16px;text-align:left;
+  font-family:'DM Mono',monospace;font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.08em;
+  border-right:1px solid var(--border);
+}
+.tbl td{
+  padding:10px 16px;
+  border-bottom:1px solid var(--border);
+  border-right:1px solid var(--border);
+  color:var(--text2);vertical-align:top;
+}
+.tbl tr:hover td{background:rgba(59,130,246,.04)}
+.tick{color:var(--green2);font-weight:700}
+.cross{color:var(--red2);font-weight:700}
+
+/* ── TWO COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+
+/* ── DIAGRAM ── */
+.diagram{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:14px;padding:2rem;margin:2rem 0;
+  overflow-x:auto;
+}
+.diag-title{
+  font-family:'DM Mono',monospace;font-size:.65rem;
+  text-transform:uppercase;letter-spacing:.15em;
+  color:var(--text3);text-align:center;margin-bottom:1.75rem;
+}
+
+/* UML */
+.uml{
+  background:var(--surface);
+  border:2px solid var(--border2);
+  border-radius:8px;overflow:hidden;
+  display:inline-block;min-width:220px;
+  font-family:'DM Mono',monospace;font-size:.75rem;
+  box-shadow:0 0 0 1px rgba(59,130,246,.15),0 4px 20px rgba(0,0,0,.4);
+}
+.uml-name{
+  background:var(--surf2);
+  padding:10px 16px;text-align:center;
+  border-bottom:1px solid var(--border2);
+}
+.uml-name .klass{color:var(--cyan2);font-weight:600;font-size:.9rem}
+.uml-name .stereo{font-size:.6rem;color:var(--text3);display:block;margin-bottom:2px}
+.uml-section{padding:10px 16px;border-bottom:1px solid var(--border)}
+.uml-section:last-child{border-bottom:none}
+.uml-row{color:var(--text2);margin:2px 0;display:flex;gap:8px;align-items:flex-start}
+.uml-vis{flex-shrink:0;font-weight:700}
+.vis-pub{color:var(--green2)}
+.vis-pri{color:var(--red2)}
+.vis-pro{color:var(--yellow2)}
+.uml-name2{color:var(--blue3)}
+.uml-type{color:var(--orange2)}
+
+/* Inheritance tree */
+.inh-tree{display:flex;flex-direction:column;align-items:center;gap:0}
+.inh-row{display:flex;gap:1.5rem;align-items:center;justify-content:center;flex-wrap:wrap}
+.inh-node{
+  padding:9px 20px;border-radius:8px;
+  font-family:'DM Mono',monospace;font-size:.75rem;
+  font-weight:600;text-align:center;min-width:140px;border:2px solid;
+}
+.inh-node.abstract{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.4);color:var(--purple2)}
+.inh-node.iface{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.4);color:var(--cyan2)}
+.inh-node.concrete{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);color:var(--green2)}
+.inh-node.concrete2{background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.3);color:var(--blue3)}
+.inh-arrow{display:flex;flex-direction:column;align-items:center;padding:3px 0}
+.inh-line{width:2px;height:22px;background:var(--border2)}
+.inh-head{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--border2)}
+
+/* ── BEST PRACTICES ── */
+.bp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin:2rem 0}
+.bp{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem}
+.bp.do{border-left:3px solid var(--green)}
+.bp.dont{border-left:3px solid var(--red)}
+.bp-lbl{font-family:'DM Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;font-weight:600}
+.do .bp-lbl{color:var(--green2)}.dont .bp-lbl{color:var(--red2)}
+.bp h4{font-size:.9rem;font-weight:600;margin-bottom:5px;color:var(--text)}
+.bp p{font-size:.8rem;margin:0;color:var(--text2)}
+
+/* ── ASSIGNMENTS ── */
+.assignment{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;margin:2rem 0;
+}
+.asgn-head{
+  background:var(--surf2);padding:14px 20px;
+  display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid var(--border);
+}
+.asgn-num{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:white;width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;font-size:.75rem;
+  font-weight:700;flex-shrink:0;
+}
+.asgn-title{font-weight:600;font-size:.95rem;color:var(--text)}
+.asgn-difficulty{
+  margin-left:auto;
+  font-family:'DM Mono',monospace;font-size:.62rem;
+  padding:3px 10px;border-radius:4px;
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.diff-easy{background:rgba(34,197,94,.15);color:var(--green2);border:1px solid rgba(34,197,94,.3)}
+.diff-med{background:rgba(234,179,8,.1);color:var(--yellow2);border:1px solid rgba(234,179,8,.3)}
+.diff-hard{background:rgba(239,68,68,.1);color:var(--red2);border:1px solid rgba(239,68,68,.3)}
+.asgn-body{padding:1.5rem}
+.asgn-task{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.25rem;
+  font-size:.9rem;color:var(--text2);
+  border-left:3px solid var(--cyan);
+}
+details{margin:1rem 0}
+details summary{
+  cursor:pointer;
+  font-family:'DM Mono',monospace;font-size:.75rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  color:var(--blue3);padding:.6rem 1rem;
+  background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);
+  border-radius:6px;
+  list-style:none;display:flex;align-items:center;gap:8px;
+  transition:background .2s;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:'▶';font-size:.6rem;transition:transform .2s}
+details[open] summary::before{transform:rotate(90deg)}
+details summary:hover{background:rgba(59,130,246,.14)}
+details .answer{padding-top:.5rem}
+
+/* ── INTERVIEW Qs ── */
+.iq-list{display:flex;flex-direction:column;gap:1rem;margin:2rem 0}
+.iq{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.iq-q{
+  padding:1rem 1.4rem;cursor:pointer;
+  display:flex;align-items:flex-start;gap:12px;
+  transition:background .2s;
+}
+.iq-q:hover{background:var(--surf2)}
+.iq-num{
+  background:var(--surf2);color:var(--cyan2);
+  font-family:'DM Mono',monospace;font-size:.65rem;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;
+  border:1px solid var(--border2);margin-top:1px;
+}
+.iq-text{font-weight:500;font-size:.92rem;flex:1;color:var(--text)}
+.iq-icon{flex-shrink:0;color:var(--text3);font-size:.85rem;transition:transform .2s;margin-top:1px}
+.iq[open] .iq-icon{transform:rotate(45deg)}
+.iq-a{
+  padding:1rem 1.4rem 1.4rem 2.8rem;
+  border-top:1px solid var(--border);
+  background:rgba(59,130,246,.03);
+  font-size:.88rem;color:var(--text2);
+}
+.iq-a .cb{margin:.75rem 0}
+.iq-tag{
+  display:inline-block;margin-left:8px;
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  padding:2px 7px;border-radius:3px;
+  text-transform:uppercase;letter-spacing:.08em;
+  vertical-align:middle;
+}
+.tag-core{background:rgba(6,182,212,.12);color:var(--cyan2);border:1px solid rgba(6,182,212,.25)}
+.tag-adv{background:rgba(239,68,68,.1);color:var(--red2);border:1px solid rgba(239,68,68,.25)}
+.tag-ts{background:rgba(59,130,246,.12);color:var(--blue3);border:1px solid rgba(59,130,246,.25)}
+.tag-hard{background:rgba(168,85,247,.1);color:var(--purple2);border:1px solid rgba(168,85,247,.25)}
+
+/* ── CHEATSHEET ── */
+.cheat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin:1.5rem 0}
+.cheat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem}
+.cheat code{
+  display:block;font-family:'DM Mono',monospace;font-size:.73rem;
+  background:var(--bg);color:var(--cyan2);
+  padding:7px 10px;border-radius:6px;margin-bottom:8px;
+  border:1px solid var(--border);white-space:pre;overflow-x:auto;
+}
+.cheat p{font-size:.78rem;margin:0;color:var(--text2)}
+
+/* inline code */
+code{
+  font-family:'DM Mono',monospace;font-size:.83em;
+  background:rgba(59,130,246,.1);color:var(--blue3);
+  padding:2px 6px;border-radius:4px;
+  border:1px solid rgba(59,130,246,.2);
+}
+
+/* ── HIGHLIGHT BAR ── */
+.hbar{
+  border-left:3px solid var(--cyan);
+  background:rgba(6,182,212,.05);
+  padding:1rem 1.25rem;border-radius:0 8px 8px 0;
+  margin:1.5rem 0;font-style:italic;color:var(--text);
+  font-size:.95rem;
+}
+
+/* ── MEMORY DIAGRAM ── */
+.mem-wrap{display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap;justify-content:center}
+.mem-box{border:1px solid var(--border2);border-radius:8px;overflow:hidden;min-width:180px}
+.mem-title{
+  background:var(--surf2);color:var(--text3);
+  padding:6px 12px;font-family:'DM Mono',monospace;
+  font-size:.62rem;text-transform:uppercase;
+  letter-spacing:.1em;text-align:center;
+  border-bottom:1px solid var(--border);
+}
+.mem-row{display:flex;border-bottom:1px solid var(--border)}
+.mem-row:last-child{border-bottom:none}
+.mem-k{
+  background:var(--bg3);padding:6px 10px;color:var(--text3);
+  min-width:80px;border-right:1px solid var(--border);
+  font-family:'DM Mono',monospace;font-size:.7rem;
+}
+.mem-v{padding:6px 10px;color:var(--text);font-family:'DM Mono',monospace;font-size:.72rem;flex:1}
+.mem-arr{
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;color:var(--blue3);padding:0 .5rem;align-self:center;
+}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:4rem 2rem;text-align:center;
+  font-size:.85rem;color:var(--text3);
+}
+footer strong{color:var(--cyan2)}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-corner">TS</div>
+  <div class="hero-content">
+    <div class="hero-chip">TypeScript · OOP · Complete Masterclass</div>
+    <h1>
+      <span class="line1">OBJECT-ORIENTED</span>
+      <span class="line2">TYPESCRIPT</span>
+    </h1>
+    <p class="hero-desc">Deep-dive into OOP with TypeScript — from classes to design patterns, with real assignments, interview prep, and a full cheatsheet. Mentored from zero to production-ready.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="n">14</span><span class="l">Chapters</span></div>
+      <div class="stat"><span class="n">50+</span><span class="l">Examples</span></div>
+      <div class="stat"><span class="n">10</span><span class="l">Assignments</span></div>
+      <div class="stat"><span class="n">25</span><span class="l">Interview Q&amp;A</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#intro">Intro</a>
+    <a href="#classes">Classes</a>
+    <a href="#objects">Objects</a>
+    <a href="#constructors">Constructors</a>
+    <a href="#access">Access</a>
+    <a href="#inheritance">Inheritance</a>
+    <a href="#polymorphism">Polymorphism</a>
+    <a href="#abstraction">Abstraction</a>
+    <a href="#interfaces">Interfaces</a>
+    <a href="#generics">Generics</a>
+    <a href="#advanced">Advanced</a>
+    <a href="#assignments">Assignments</a>
+    <a href="#interview">Interview</a>
+    <a href="#cheatsheet">Cheatsheet</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════ INTRO ════════════════════════════════ -->
+<section id="intro">
+<div class="container">
+  <div class="sec-tag">Chapter 01</div>
+  <h2>WHY OOP IN <span>TYPESCRIPT?</span></h2>
+
+  <p>TypeScript brings <strong>static typing</strong> to JavaScript OOP — meaning the compiler catches class design mistakes before runtime. You get all of JavaScript's flexibility <em>plus</em> Java/C#-style class safety.</p>
+
+  <div class="hbar">"TypeScript is what happens when you give JavaScript a blueprint. OOP in TypeScript is the art of building systems that can grow without falling apart."</div>
+
+  <div class="pillars">
+    <div class="pillar p1" data-n="1">
+      <div class="pillar-icon">🔒</div>
+      <h3>Encapsulation</h3>
+      <p>Bundle data + behaviour together. Control what the outside world can see with <code>private</code>, <code>protected</code>, <code>public</code>. TypeScript adds <code>readonly</code> on top.</p>
+    </div>
+    <div class="pillar p2" data-n="2">
+      <div class="pillar-icon">🧬</div>
+      <h3>Inheritance</h3>
+      <p>Child classes <code>extend</code> parents. Reuse + specialize. TypeScript checks the hierarchy at compile time so broken override signatures are caught instantly.</p>
+    </div>
+    <div class="pillar p3" data-n="3">
+      <div class="pillar-icon">🎭</div>
+      <h3>Polymorphism</h3>
+      <p>One interface, many shapes. TypeScript's structural typing means any object that <em>looks like</em> an interface satisfies it — duck typing with guardrails.</p>
+    </div>
+    <div class="pillar p4" data-n="4">
+      <div class="pillar-icon">🌫️</div>
+      <h3>Abstraction</h3>
+      <p><code>abstract</code> classes + interfaces let you define contracts without implementations. TypeScript enforces these contracts at compile time.</p>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <span class="ci">📝</span>
+    <div class="cb2">
+      <strong>TypeScript vs JavaScript OOP</strong>
+      <p>JS has OOP via prototypes and ES6 classes. TypeScript adds: access modifiers, <code>abstract</code>, <code>readonly</code>, <code>interface</code>, generics, strict null checks, and full type inference on all class members.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ CLASSES ════════════════════════════════ -->
+<section id="classes">
+<div class="container">
+  <div class="sec-tag">Chapter 02</div>
+  <h2>CLASSES — <span>BLUEPRINTS</span></h2>
+
+  <p>A class is a reusable blueprint for creating objects. TypeScript classes compile to ES6 classes but add compile-time type checking on every member.</p>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">BankAccount.ts — fully annotated class</span></div>
+    <pre>
+<span class="cm">// ── Class declaration ──────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="ty">BankAccount</span> <span class="op">{</span>
+
+  <span class="cm">// ── Instance fields (each object gets its own copy) ──────────</span>
+  <span class="kw">private</span>   <span class="pr">owner</span><span class="op">:</span>    <span class="ty">string</span><span class="op">;</span>
+  <span class="kw">private</span>   <span class="pr">balance</span><span class="op">:</span>  <span class="ty">number</span><span class="op">;</span>
+  <span class="kw">readonly</span>  <span class="pr">accountId</span><span class="op">:</span> <span class="ty">string</span><span class="op">;</span>   <span class="cm">// set once, never changed</span>
+  <span class="kw">protected</span> <span class="pr">currency</span><span class="op">:</span> <span class="ty">string</span><span class="op">;</span>
+
+  <span class="cm">// ── Static field (shared by ALL instances) ───────────────────</span>
+  <span class="kw">private</span> <span class="kw">static</span> <span class="pr">instanceCount</span><span class="op">:</span> <span class="ty">number</span> <span class="op">= 0</span><span class="op">;</span>
+
+  <span class="cm">// ── Constructor ───────────────────────────────────────────────</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">owner</span><span class="op">:</span> <span class="ty">string</span><span class="op">,</span> <span class="pr">initialBalance</span><span class="op">:</span> <span class="ty">number</span> <span class="op">=</span> <span class="nm">0</span><span class="op">,</span> <span class="pr">currency</span><span class="op">:</span> <span class="ty">string</span> <span class="op">= "</span><span class="st">USD</span><span class="op">"</span><span class="op">) {</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">owner</span>     <span class="op">=</span> <span class="pr">owner</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">balance</span>   <span class="op">=</span> <span class="pr">initialBalance</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">currency</span>  <span class="op">=</span> <span class="pr">currency</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">accountId</span> <span class="op">=</span> <span class="op">`</span><span class="st">ACC-</span><span class="op">${++</span><span class="ty">BankAccount</span><span class="op">.</span><span class="pr">instanceCount</span><span class="op">}}`</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="cm">// ── Instance methods ──────────────────────────────────────────</span>
+  <span class="fn">deposit</span><span class="op">(</span><span class="pr">amount</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="pr">amount</span> <span class="op">&lt;=</span> <span class="nm">0</span><span class="op">)</span> <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">Error</span><span class="op">(</span><span class="op">"</span><span class="st">Deposit must be positive</span><span class="op">"</span><span class="op">);</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">balance</span> <span class="op">+=</span> <span class="pr">amount</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="fn">withdraw</span><span class="op">(</span><span class="pr">amount</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">boolean</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="pr">amount</span> <span class="op">&gt;</span> <span class="kw">this</span><span class="op">.</span><span class="pr">balance</span><span class="op">)</span> <span class="kw">return</span> <span class="bl">false</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">balance</span> <span class="op">-=</span> <span class="pr">amount</span><span class="op">;</span>
+    <span class="kw">return</span> <span class="bl">true</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="cm">// ── Getter / Setter ───────────────────────────────────────────</span>
+  <span class="kw">get</span> <span class="fn">currentBalance</span><span class="op">():</span> <span class="ty">number</span>        <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">balance</span><span class="op">; }</span>
+  <span class="kw">get</span> <span class="fn">ownerName</span><span class="op">():</span>      <span class="ty">string</span>        <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">owner</span><span class="op">; }</span>
+
+  <span class="kw">set</span> <span class="fn">ownerName</span><span class="op">(</span><span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">) {</span>
+    <span class="kw">if</span> <span class="op">(!</span><span class="pr">name</span><span class="op">.</span><span class="fn">trim</span><span class="op">())</span> <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">Error</span><span class="op">(</span><span class="op">"</span><span class="st">Name required</span><span class="op">"</span><span class="op">);</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">owner</span> <span class="op">=</span> <span class="pr">name</span><span class="op">.</span><span class="fn">trim</span><span class="op">();</span>
+  <span class="op">}</span>
+
+  <span class="cm">// ── Static method ────────────────────────────────────────────</span>
+  <span class="kw">static</span> <span class="fn">getTotalAccounts</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span> <span class="kw">return</span> <span class="ty">BankAccount</span><span class="op">.</span><span class="pr">instanceCount</span><span class="op">; }</span>
+
+  <span class="cm">// ── toString equivalent ───────────────────────────────────────</span>
+  <span class="fn">toString</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">`[</span><span class="st">${this.accountId}</span><span class="op">]</span> <span class="st">${this.owner}</span><span class="op"> — </span><span class="st">${this.currency} ${this.balance.toFixed(2)}</span><span class="op">`</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Usage ─────────────────────────────────────────────────────</span>
+<span class="kw">const</span> <span class="pr">acc1</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">BankAccount</span><span class="op">(</span><span class="op">"</span><span class="st">Alice</span><span class="op">",</span> <span class="nm">5000</span><span class="op">);</span>
+<span class="kw">const</span> <span class="pr">acc2</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">BankAccount</span><span class="op">(</span><span class="op">"</span><span class="st">Bob</span><span class="op">",</span>   <span class="nm">1200</span><span class="op">,</span> <span class="op">"</span><span class="st">EUR</span><span class="op">"</span><span class="op">);</span>
+
+<span class="pr">acc1</span><span class="op">.</span><span class="fn">deposit</span><span class="op">(</span><span class="nm">500</span><span class="op">);</span>
+<span class="pr">acc1</span><span class="op">.</span><span class="fn">withdraw</span><span class="op">(</span><span class="nm">200</span><span class="op">);</span>
+
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">acc1</span><span class="op">.</span><span class="fn">toString</span><span class="op">());</span>        <span class="cm">// [ACC-1] Alice — USD 5300.00</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">acc1</span><span class="op">.</span><span class="pr">currentBalance</span><span class="op">);</span>  <span class="cm">// 5300 (via getter)</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="ty">BankAccount</span><span class="op">.</span><span class="fn">getTotalAccounts</span><span class="op">());</span> <span class="cm">// 2</span>
+</pre>
+  </div>
+
+  <h3>TypeScript Parameter Properties Shortcut</h3>
+  <p>TypeScript lets you declare and initialize fields directly in the constructor signature. This is unique to TypeScript — it's a <strong>massive</strong> time saver.</p>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">parameter-properties.ts</span></div>
+    <pre>
+<span class="cm">// ❌ Verbose (Java-style) — don't need this in TypeScript</span>
+<span class="kw">class</span> <span class="ty">Verbose</span> <span class="op">{</span>
+  <span class="kw">private</span> <span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">;</span>
+  <span class="kw">private</span> <span class="pr">age</span><span class="op">:</span>  <span class="ty">number</span><span class="op">;</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">,</span> <span class="pr">age</span><span class="op">:</span> <span class="ty">number</span><span class="op">) {</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">name</span> <span class="op">=</span> <span class="pr">name</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">age</span>  <span class="op">=</span> <span class="pr">age</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// ✅ Concise — TypeScript parameter properties</span>
+<span class="kw">class</span> <span class="ty">Person</span> <span class="op">{</span>
+  <span class="kw">constructor</span><span class="op">(</span>
+    <span class="kw">private</span>  <span class="kw">readonly</span> <span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">,</span>
+    <span class="kw">private</span>           <span class="pr">age</span><span class="op">:</span>  <span class="ty">number</span><span class="op">,</span>
+    <span class="kw">public</span>            <span class="pr">role</span><span class="op">:</span> <span class="ty">string</span> <span class="op">=</span> <span class="op">"</span><span class="st">user</span><span class="op">"</span>
+  <span class="op">) {}</span>   <span class="cm">// body is empty — fields auto-created!</span>
+
+  <span class="fn">greet</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">`</span><span class="st">Hi, I'm ${this.name}, age ${this.age} (${this.role})</span><span class="op">`</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">const</span> <span class="pr">p</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Person</span><span class="op">(</span><span class="op">"</span><span class="st">Alice</span><span class="op">",</span> <span class="nm">30</span><span class="op">);</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">p</span><span class="op">.</span><span class="fn">greet</span><span class="op">());</span>  <span class="cm">// Hi, I'm Alice, age 30 (user)</span>
+<span class="cm">// p.name = "Bob";  ← TS ERROR: readonly!</span>
+</pre>
+  </div>
+
+  <div class="callout tip">
+    <span class="ci">💡</span>
+    <div class="cb2">
+      <strong>Always Use Parameter Properties</strong>
+      <p>In TypeScript, parameter properties are idiomatic. The access modifier in the constructor parameter automatically declares <em>and</em> initializes the field. Use <code>readonly</code> for fields that shouldn't change after construction.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ OBJECTS ════════════════════════════════ -->
+<section id="objects">
+<div class="container">
+  <div class="sec-tag">Chapter 03</div>
+  <h2>OBJECTS — <span>INSTANCES &amp; MEMORY</span></h2>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">objects-demo.ts</span></div>
+    <pre>
+<span class="kw">const</span> <span class="pr">car1</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Car</span><span class="op">(</span><span class="op">"</span><span class="st">Tesla</span><span class="op">",</span> <span class="op">"</span><span class="st">Model S</span><span class="op">",</span> <span class="nm">2024</span><span class="op">);</span>
+<span class="kw">const</span> <span class="pr">car2</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Car</span><span class="op">(</span><span class="op">"</span><span class="st">BMW</span><span class="op">",</span>   <span class="op">"</span><span class="st">M3</span><span class="op">",</span>      <span class="nm">2023</span><span class="op">);</span>
+
+<span class="cm">// car1 and car2 are REFERENCES to heap objects</span>
+<span class="kw">const</span> <span class="pr">car3</span> <span class="op">=</span> <span class="pr">car1</span><span class="op">;</span>  <span class="cm">// same reference — NOT a copy!</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">car3</span> <span class="op">===</span> <span class="pr">car1</span><span class="op">);</span>  <span class="cm">// true</span>
+
+<span class="cm">// TypeScript type guard</span>
+<span class="kw">function</span> <span class="fn">isCar</span><span class="op">(</span><span class="pr">obj</span><span class="op">:</span> <span class="ty">unknown</span><span class="op">):</span> <span class="pr">obj</span> <span class="kw">is</span> <span class="ty">Car</span> <span class="op">{</span>
+  <span class="kw">return</span> <span class="pr">obj</span> <span class="kw">instanceof</span> <span class="ty">Car</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cm">// Object literal — NOT a class instance, but valid TS object</span>
+<span class="kw">const</span> <span class="pr">point</span><span class="op">: {</span> <span class="pr">x</span><span class="op">:</span> <span class="ty">number</span><span class="op">;</span> <span class="pr">y</span><span class="op">:</span> <span class="ty">number</span> <span class="op">} = {</span> <span class="pr">x</span><span class="op">:</span> <span class="nm">10</span><span class="op">,</span> <span class="pr">y</span><span class="op">:</span> <span class="nm">20</span> <span class="op">};</span>
+
+<span class="cm">// Structural typing — TypeScript's duck typing</span>
+<span class="kw">function</span> <span class="fn">printName</span><span class="op">(</span><span class="pr">obj</span><span class="op">: {</span> <span class="pr">name</span><span class="op">:</span> <span class="ty">string</span> <span class="op">}):</span> <span class="ty">void</span> <span class="op">{</span>
+  <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">obj</span><span class="op">.</span><span class="pr">name</span><span class="op">);</span>
+<span class="op">}</span>
+<span class="cm">// Works with ANY object that has a 'name' field:</span>
+<span class="fn">printName</span><span class="op">(</span><span class="kw">new</span> <span class="ty">Person</span><span class="op">(</span><span class="op">"</span><span class="st">Eve</span><span class="op">",</span> <span class="nm">25</span><span class="op">));</span>  <span class="cm">// ✓ has name</span>
+<span class="fn">printName</span><span class="op">({</span> <span class="pr">name</span><span class="op">:</span> <span class="op">"</span><span class="st">Raw obj</span><span class="op">",</span> <span class="pr">extra</span><span class="op">:</span> <span class="nm">42</span> <span class="op">});</span> <span class="cm">// ✓ structural match</span>
+</pre>
+  </div>
+
+  <h3>Stack vs Heap — Visualized</h3>
+  <div class="diagram">
+    <div class="diag-title">🧠 MEMORY MODEL — stack holds references, heap holds objects</div>
+    <div class="mem-wrap">
+      <div class="mem-box">
+        <div class="mem-title">Call Stack</div>
+        <div class="mem-row"><div class="mem-k">car1</div><div class="mem-v" style="color:var(--blue3)">→ 0xA4F2</div></div>
+        <div class="mem-row"><div class="mem-k">car2</div><div class="mem-v" style="color:var(--cyan2)">→ 0xB7D9</div></div>
+        <div class="mem-row"><div class="mem-k">car3</div><div class="mem-v" style="color:var(--blue3)">→ 0xA4F2</div></div>
+      </div>
+      <div class="mem-arr">→</div>
+      <div>
+        <div class="mem-box" style="margin-bottom:1rem">
+          <div class="mem-title" style="background:rgba(59,130,246,.2);color:var(--blue3)">Heap 0xA4F2 (car1 &amp; car3)</div>
+          <div class="mem-row"><div class="mem-k">brand</div><div class="mem-v">"Tesla"</div></div>
+          <div class="mem-row"><div class="mem-k">model</div><div class="mem-v">"Model S"</div></div>
+          <div class="mem-row"><div class="mem-k">year</div><div class="mem-v">2024</div></div>
+        </div>
+        <div class="mem-box">
+          <div class="mem-title" style="background:rgba(6,182,212,.15);color:var(--cyan2)">Heap 0xB7D9 (car2)</div>
+          <div class="mem-row"><div class="mem-k">brand</div><div class="mem-v">"BMW"</div></div>
+          <div class="mem-row"><div class="mem-k">model</div><div class="mem-v">"M3"</div></div>
+          <div class="mem-row"><div class="mem-k">year</div><div class="mem-v">2023</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ CONSTRUCTORS ════════════════════════════════ -->
+<section id="constructors">
+<div class="container">
+  <div class="sec-tag">Chapter 04</div>
+  <h2>CONSTRUCTORS &amp; <span>OVERLOADS</span></h2>
+
+  <p>TypeScript supports <strong>constructor overloads</strong> — multiple call signatures for one constructor. Unlike Java, there's only one implementation body.</p>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">constructor-overloads.ts</span></div>
+    <pre>
+<span class="kw">class</span> <span class="ty">Vector2D</span> <span class="op">{</span>
+
+  <span class="cm">// ── Overload signatures (no body) ───────────────────────────</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">x</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">y</span><span class="op">:</span> <span class="ty">number</span><span class="op">);</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">magnitude</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">angleDeg</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">polar</span><span class="op">:</span> <span class="bl">true</span><span class="op">);</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">other</span><span class="op">:</span> <span class="ty">Vector2D</span><span class="op">);</span>  <span class="cm">// copy</span>
+
+  <span class="cm">// ── Implementation (handles all overloads) ──────────────────</span>
+  <span class="kw">constructor</span><span class="op">(</span>
+    <span class="kw">public</span> <span class="pr">x</span><span class="op">:</span> <span class="ty">number</span> <span class="op">|</span> <span class="ty">Vector2D</span><span class="op">,</span>
+    <span class="kw">public</span> <span class="pr">y</span><span class="op">:</span> <span class="ty">number</span> <span class="op">=</span> <span class="nm">0</span><span class="op">,</span>
+    <span class="pr">polar</span><span class="op">?:</span> <span class="bl">true</span>
+  <span class="op">) {</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="kw">typeof</span> <span class="kw">this</span><span class="op">.</span><span class="pr">x</span> <span class="op">=== "</span><span class="st">object</span><span class="op">") {</span>  <span class="cm">// copy constructor</span>
+      <span class="kw">const</span> <span class="pr">src</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="pr">x</span> <span class="kw">as</span> <span class="ty">Vector2D</span><span class="op">;</span>
+      <span class="kw">this</span><span class="op">.</span><span class="pr">x</span> <span class="op">=</span> <span class="pr">src</span><span class="op">.</span><span class="pr">x</span><span class="op">;</span>
+      <span class="kw">this</span><span class="op">.</span><span class="pr">y</span> <span class="op">=</span> <span class="pr">src</span><span class="op">.</span><span class="pr">y</span><span class="op">;</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="pr">polar</span><span class="op">) {</span>              <span class="cm">// polar → cartesian</span>
+      <span class="kw">const</span> <span class="pr">rad</span> <span class="op">=</span> <span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">y</span> <span class="op">*</span> <span class="ty">Math</span><span class="op">.</span><span class="pr">PI</span><span class="op">) /</span> <span class="nm">180</span><span class="op">;</span>
+      <span class="kw">this</span><span class="op">.</span><span class="pr">y</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="pr">x</span> <span class="op">*</span> <span class="ty">Math</span><span class="op">.</span><span class="fn">sin</span><span class="op">(</span><span class="pr">rad</span><span class="op">);</span>
+      <span class="kw">this</span><span class="op">.</span><span class="pr">x</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="pr">x</span> <span class="op">*</span> <span class="ty">Math</span><span class="op">.</span><span class="fn">cos</span><span class="op">(</span><span class="pr">rad</span><span class="op">);</span>
+    <span class="op">}</span>
+    <span class="cm">// else: normal x,y — already set by parameter properties</span>
+  <span class="op">}</span>
+
+  <span class="fn">add</span><span class="op">(</span><span class="pr">v</span><span class="op">:</span> <span class="ty">Vector2D</span><span class="op">):</span> <span class="ty">Vector2D</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">Vector2D</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">x</span> <span class="op">+</span> <span class="pr">v</span><span class="op">.</span><span class="pr">x</span><span class="op">,</span> <span class="kw">this</span><span class="op">.</span><span class="pr">y</span> <span class="op">+</span> <span class="pr">v</span><span class="op">.</span><span class="pr">y</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="kw">get</span> <span class="fn">magnitude</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="ty">Math</span><span class="op">.</span><span class="fn">sqrt</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">x</span> <span class="op">**</span> <span class="nm">2</span> <span class="op">+</span> <span class="kw">this</span><span class="op">.</span><span class="pr">y</span> <span class="op">**</span> <span class="nm">2</span><span class="op">);</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">const</span> <span class="pr">v1</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Vector2D</span><span class="op">(</span><span class="nm">3</span><span class="op">,</span> <span class="nm">4</span><span class="op">);</span>        <span class="cm">// cartesian</span>
+<span class="kw">const</span> <span class="pr">v2</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Vector2D</span><span class="op">(</span><span class="pr">v1</span><span class="op">);</span>         <span class="cm">// copy</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">v1</span><span class="op">.</span><span class="pr">magnitude</span><span class="op">);</span>           <span class="cm">// 5</span>
+</pre>
+  </div>
+
+  <h3>Factory Pattern via Static Methods</h3>
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">factory-method.ts</span></div>
+    <pre>
+<span class="kw">class</span> <span class="ty">Color</span> <span class="op">{</span>
+  <span class="cm">// Private constructor — can't use 'new Color()' directly</span>
+  <span class="kw">private</span> <span class="kw">constructor</span><span class="op">(</span>
+    <span class="kw">public</span> <span class="kw">readonly</span> <span class="pr">r</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span>
+    <span class="kw">public</span> <span class="kw">readonly</span> <span class="pr">g</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span>
+    <span class="kw">public</span> <span class="kw">readonly</span> <span class="pr">b</span><span class="op">:</span> <span class="ty">number</span>
+  <span class="op">) {}</span>
+
+  <span class="cm">// Named factory methods — clearer intent than raw constructor</span>
+  <span class="kw">static</span> <span class="fn">fromRGB</span><span class="op">(</span><span class="pr">r</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">g</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">b</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">Color</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">([</span><span class="pr">r</span><span class="op">,</span><span class="pr">g</span><span class="op">,</span><span class="pr">b</span><span class="op">].</span><span class="fn">some</span><span class="op">(</span><span class="pr">v</span> <span class="op">=&gt;</span> <span class="pr">v</span> <span class="op">&lt;</span> <span class="nm">0</span> <span class="op">||</span> <span class="pr">v</span> <span class="op">&gt;</span> <span class="nm">255</span><span class="op">))</span>
+      <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">RangeError</span><span class="op">(</span><span class="op">"</span><span class="st">RGB values must be 0-255</span><span class="op">"</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">Color</span><span class="op">(</span><span class="pr">r</span><span class="op">,</span> <span class="pr">g</span><span class="op">,</span> <span class="pr">b</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="kw">static</span> <span class="fn">fromHex</span><span class="op">(</span><span class="pr">hex</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">Color</span> <span class="op">{</span>
+    <span class="kw">const</span> <span class="pr">h</span> <span class="op">=</span> <span class="pr">hex</span><span class="op">.</span><span class="fn">replace</span><span class="op">(</span><span class="op">/</span><span class="st">^#</span><span class="op">/,</span> <span class="op">""</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">Color</span><span class="op">(</span>
+      <span class="ty">parseInt</span><span class="op">(</span><span class="pr">h</span><span class="op">.</span><span class="fn">slice</span><span class="op">(</span><span class="nm">0</span><span class="op">,</span><span class="nm">2</span><span class="op">),</span><span class="nm">16</span><span class="op">),</span>
+      <span class="ty">parseInt</span><span class="op">(</span><span class="pr">h</span><span class="op">.</span><span class="fn">slice</span><span class="op">(</span><span class="nm">2</span><span class="op">,</span><span class="nm">4</span><span class="op">),</span><span class="nm">16</span><span class="op">),</span>
+      <span class="ty">parseInt</span><span class="op">(</span><span class="pr">h</span><span class="op">.</span><span class="fn">slice</span><span class="op">(</span><span class="nm">4</span><span class="op">,</span><span class="nm">6</span><span class="op">),</span><span class="nm">16</span><span class="op">)</span>
+    <span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="kw">static</span> <span class="kw">readonly</span> <span class="pr">RED</span>   <span class="op">=</span> <span class="ty">Color</span><span class="op">.</span><span class="fn">fromRGB</span><span class="op">(</span><span class="nm">255</span><span class="op">,</span> <span class="nm">0</span><span class="op">,</span> <span class="nm">0</span><span class="op">);</span>
+  <span class="kw">static</span> <span class="kw">readonly</span> <span class="pr">GREEN</span> <span class="op">=</span> <span class="ty">Color</span><span class="op">.</span><span class="fn">fromRGB</span><span class="op">(</span><span class="nm">0</span><span class="op">,</span> <span class="nm">255</span><span class="op">,</span> <span class="nm">0</span><span class="op">);</span>
+  <span class="kw">static</span> <span class="kw">readonly</span> <span class="pr">BLUE</span>  <span class="op">=</span> <span class="ty">Color</span><span class="op">.</span><span class="fn">fromRGB</span><span class="op">(</span><span class="nm">0</span><span class="op">,</span> <span class="nm">0</span><span class="op">,</span> <span class="nm">255</span><span class="op">);</span>
+
+  <span class="fn">toHex</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">`#${[</span><span class="kw">this</span><span class="op">.</span><span class="pr">r</span><span class="op">,</span><span class="kw">this</span><span class="op">.</span><span class="pr">g</span><span class="op">,</span><span class="kw">this</span><span class="op">.</span><span class="pr">b</span><span class="op">]</span>
+      <span class="op">.</span><span class="fn">map</span><span class="op">(</span><span class="pr">v</span> <span class="op">=&gt;</span> <span class="pr">v</span><span class="op">.</span><span class="fn">toString</span><span class="op">(</span><span class="nm">16</span><span class="op">).</span><span class="fn">padStart</span><span class="op">(</span><span class="nm">2</span><span class="op">,</span><span class="op">"</span><span class="st">0</span><span class="op">"))</span>
+      <span class="op">.</span><span class="fn">join</span><span class="op">(</span><span class="op">""</span><span class="op">)}`</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">const</span> <span class="pr">c1</span> <span class="op">=</span> <span class="ty">Color</span><span class="op">.</span><span class="fn">fromHex</span><span class="op">(</span><span class="op">"</span><span class="st">#1a2b3c</span><span class="op">"</span><span class="op">);</span>
+<span class="kw">const</span> <span class="pr">c2</span> <span class="op">=</span> <span class="ty">Color</span><span class="op">.</span><span class="pr">RED</span><span class="op">;</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">c2</span><span class="op">.</span><span class="fn">toHex</span><span class="op">());</span>  <span class="cm">// #ff0000</span>
+</pre>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ ACCESS MODIFIERS ════════════════════════════════ -->
+<section id="access">
+<div class="container">
+  <div class="sec-tag">Chapter 05</div>
+  <h2>ACCESS MODIFIERS &amp; <span>ENCAPSULATION</span></h2>
+
+  <table class="tbl">
+    <thead>
+      <tr><th>Modifier</th><th>Same Class</th><th>Subclass</th><th>Outside Class</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>public</code></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td>Default if omitted</td></tr>
+      <tr><td><code>private</code></td><td><span class="tick">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td>TS compile-time only</td></tr>
+      <tr><td><code>#private</code></td><td><span class="tick">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td>True JS runtime private</td></tr>
+      <tr><td><code>protected</code></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="cross">✗</span></td><td>Subclasses only</td></tr>
+      <tr><td><code>readonly</code></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td>read-only</td><td>Combinable with others</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">access-modifiers.ts — all modifiers compared</span></div>
+    <pre>
+<span class="kw">class</span> <span class="ty">Employee</span> <span class="op">{</span>
+  <span class="kw">public</span>    <span class="pr">name</span><span class="op">:</span>      <span class="ty">string</span><span class="op">;</span>  <span class="cm">// accessible everywhere</span>
+  <span class="kw">protected</span> <span class="pr">salary</span><span class="op">:</span>    <span class="ty">number</span><span class="op">;</span>  <span class="cm">// accessible in this class + subclasses</span>
+  <span class="kw">private</span>   <span class="pr">password</span><span class="op">:</span>  <span class="ty">string</span><span class="op">;</span>  <span class="cm">// this class ONLY (TS compile check)</span>
+  <span class="op">#</span><span class="pr">ssn</span><span class="op">:</span>               <span class="ty">string</span><span class="op">;</span>  <span class="cm">// TRUE private — runtime enforced (ES2022)</span>
+  <span class="kw">readonly</span>  <span class="pr">id</span><span class="op">:</span>        <span class="ty">string</span><span class="op">;</span>  <span class="cm">// can't reassign after construction</span>
+  <span class="kw">static</span>    <span class="pr">company</span><span class="op">:</span>   <span class="ty">string</span> <span class="op">=</span> <span class="op">"</span><span class="st">Acme Corp</span><span class="op">"</span><span class="op">;</span>  <span class="cm">// shared</span>
+
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">name</span><span class="op">:</span><span class="ty">string</span><span class="op">,</span> <span class="pr">salary</span><span class="op">:</span><span class="ty">number</span><span class="op">,</span> <span class="pr">ssn</span><span class="op">:</span><span class="ty">string</span><span class="op">) {</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">name</span>     <span class="op">=</span> <span class="pr">name</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">salary</span>   <span class="op">=</span> <span class="pr">salary</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">password</span> <span class="op">=</span> <span class="fn">hashPassword</span><span class="op">(</span><span class="pr">ssn</span><span class="op">);</span>
+    <span class="kw">this</span><span class="op">.#</span><span class="pr">ssn</span>     <span class="op">=</span> <span class="pr">ssn</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">id</span>       <span class="op">=</span> <span class="op">`</span><span class="st">EMP-${Date.now()}</span><span class="op">`</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="cm">// Getter gives read access without exposing the field directly</span>
+  <span class="kw">get</span> <span class="fn">annualSalary</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">salary</span> <span class="op">*</span> <span class="nm">12</span><span class="op">; }</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">Manager</span> <span class="kw">extends</span> <span class="ty">Employee</span> <span class="op">{</span>
+  <span class="fn">giveRaise</span><span class="op">(</span><span class="pr">amount</span><span class="op">:</span><span class="ty">number</span><span class="op">) {</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">salary</span> <span class="op">+=</span> <span class="pr">amount</span><span class="op">;</span>  <span class="cm">// ✓ protected is accessible</span>
+    <span class="cm">// this.password       ← TS ERROR: private</span>
+    <span class="cm">// this.#ssn           ← TS ERROR: #private not inherited</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">const</span> <span class="pr">emp</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Employee</span><span class="op">(</span><span class="op">"</span><span class="st">Alice</span><span class="op">",</span> <span class="nm">5000</span><span class="op">,</span> <span class="op">"</span><span class="st">123-45-6789</span><span class="op">"</span><span class="op">);</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">emp</span><span class="op">.</span><span class="pr">name</span><span class="op">);</span>         <span class="cm">// ✓ Alice</span>
+<span class="cm">// emp.salary    ← TS ERROR: protected</span>
+<span class="cm">// emp.password  ← TS ERROR: private</span>
+<span class="cm">// emp.id = "x"  ← TS ERROR: readonly</span>
+</pre>
+  </div>
+
+  <div class="callout warn">
+    <span class="ci">⚠️</span>
+    <div class="cb2">
+      <strong>private vs #private — Know the Difference</strong>
+      <p>TypeScript's <code>private</code> keyword is a <em>compile-time-only</em> restriction — at runtime, the field is still accessible via <code>(obj as any).field</code>. The ES2022 <code>#field</code> syntax creates a <em>true runtime private</em> field that cannot be accessed externally at all, even with casting. For sensitive data like tokens or SSNs, prefer <code>#field</code>.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ INHERITANCE ════════════════════════════════ -->
+<section id="inheritance">
+<div class="container">
+  <div class="sec-tag">Chapter 06</div>
+  <h2>INHERITANCE &amp; <span>THE PROTOTYPE CHAIN</span></h2>
+
+  <div class="diagram">
+    <div class="diag-title">🌳 INHERITANCE TREE — E-Commerce Product System</div>
+    <div class="inh-tree">
+      <div class="inh-row"><div class="inh-node abstract">BaseProduct (abstract)</div></div>
+      <div class="inh-arrow"><div class="inh-line"></div><div class="inh-head"></div></div>
+      <div class="inh-row" style="gap:1rem">
+        <div class="inh-node concrete">PhysicalProduct</div>
+        <div class="inh-node concrete">DigitalProduct</div>
+        <div class="inh-node concrete">SubscriptionProduct</div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:6rem;margin:3px 0">
+        <div class="inh-arrow"><div class="inh-line"></div><div class="inh-head"></div></div>
+        <div style="width:2px"></div>
+      </div>
+      <div class="inh-row" style="gap:1rem">
+        <div class="inh-node concrete2">HeavyItem</div>
+        <div class="inh-node concrete2">FragileItem</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">inheritance-deep-dive.ts</span></div>
+    <pre>
+<span class="cm">// ═══ BASE CLASS ══════════════════════════════════════════════</span>
+<span class="kw">abstract class</span> <span class="ty">BaseProduct</span> <span class="op">{</span>
+  <span class="kw">private static</span> <span class="pr">_nextId</span> <span class="op">=</span> <span class="nm">1</span><span class="op">;</span>
+
+  <span class="kw">constructor</span><span class="op">(</span>
+    <span class="kw">public</span> <span class="kw">readonly</span> <span class="pr">id</span><span class="op">:</span>    <span class="ty">number</span> <span class="op">=</span> <span class="ty">BaseProduct</span><span class="op">.</span><span class="pr">_nextId</span><span class="op">++,</span>
+    <span class="kw">public</span>           <span class="pr">name</span><span class="op">:</span>  <span class="ty">string</span><span class="op">,</span>
+    <span class="kw">protected</span>        <span class="pr">price</span><span class="op">:</span> <span class="ty">number</span>
+  <span class="op">) {}</span>
+
+  <span class="cm">// Abstract — each subclass MUST implement</span>
+  <span class="kw">abstract</span> <span class="fn">calculateShipping</span><span class="op">():</span> <span class="ty">number</span><span class="op">;</span>
+  <span class="kw">abstract</span> <span class="kw">get</span> <span class="fn">category</span><span class="op">():</span> <span class="ty">string</span><span class="op">;</span>
+
+  <span class="cm">// Concrete — shared by all</span>
+  <span class="kw">get</span> <span class="fn">totalCost</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">price</span> <span class="op">+</span> <span class="kw">this</span><span class="op">.</span><span class="fn">calculateShipping</span><span class="op">();</span>
+  <span class="op">}</span>
+
+  <span class="fn">toString</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">`[${</span><span class="kw">this</span><span class="op">.</span><span class="pr">category</span><span class="op">}] #${</span><span class="kw">this</span><span class="op">.</span><span class="pr">id</span><span class="op">} ${</span><span class="kw">this</span><span class="op">.</span><span class="pr">name</span><span class="op">} — $${</span><span class="kw">this</span><span class="op">.</span><span class="pr">totalCost</span><span class="op">.</span><span class="fn">toFixed</span><span class="op">(</span><span class="nm">2</span><span class="op">)}`</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// ═══ PHYSICAL PRODUCT ════════════════════════════════════════</span>
+<span class="kw">class</span> <span class="ty">PhysicalProduct</span> <span class="kw">extends</span> <span class="ty">BaseProduct</span> <span class="op">{</span>
+  <span class="kw">constructor</span><span class="op">(</span>
+    <span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">,</span>
+    <span class="pr">price</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span>
+    <span class="kw">private</span> <span class="pr">weightKg</span><span class="op">:</span> <span class="ty">number</span>
+  <span class="op">) {</span>
+    <span class="kw">super</span><span class="op">(</span><span class="kw">undefined</span><span class="op">,</span> <span class="pr">name</span><span class="op">,</span> <span class="pr">price</span><span class="op">);</span>  <span class="cm">// let base assign id</span>
+  <span class="op">}</span>
+
+  <span class="fn">calculateShipping</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">weightKg</span> <span class="op">*</span> <span class="nm">2.5</span><span class="op">;</span>  <span class="cm">// $2.50 per kg</span>
+  <span class="op">}</span>
+
+  <span class="kw">get</span> <span class="fn">category</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span> <span class="kw">return</span> <span class="op">"</span><span class="st">Physical</span><span class="op">"</span><span class="op">; }</span>
+<span class="op">}</span>
+
+<span class="cm">// ═══ DIGITAL PRODUCT ─────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="ty">DigitalProduct</span> <span class="kw">extends</span> <span class="ty">BaseProduct</span> <span class="op">{</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">name</span><span class="op">:</span><span class="ty">string</span><span class="op">,</span> <span class="pr">price</span><span class="op">:</span><span class="ty">number</span><span class="op">) {</span>
+    <span class="kw">super</span><span class="op">(</span><span class="kw">undefined</span><span class="op">,</span> <span class="pr">name</span><span class="op">,</span> <span class="pr">price</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="fn">calculateShipping</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span> <span class="kw">return</span> <span class="nm">0</span><span class="op">;</span> <span class="op">}</span>  <span class="cm">// free!</span>
+  <span class="kw">get</span> <span class="fn">category</span><span class="op">():</span> <span class="ty">string</span>             <span class="op">{</span> <span class="kw">return</span> <span class="op">"</span><span class="st">Digital</span><span class="op">"</span><span class="op">; }</span>
+<span class="op">}</span>
+
+<span class="cm">// ═══ POLYMORPHIC USAGE ───────────────────────────────────────</span>
+<span class="kw">const</span> <span class="pr">cart</span><span class="op">:</span> <span class="ty">BaseProduct</span><span class="op">[] = [</span>
+  <span class="kw">new</span> <span class="ty">PhysicalProduct</span><span class="op">(</span><span class="op">"</span><span class="st">Laptop</span><span class="op">",</span>   <span class="nm">999</span><span class="op">,</span> <span class="nm">2.1</span><span class="op">),</span>
+  <span class="kw">new</span> <span class="ty">DigitalProduct</span><span class="op">(</span><span class="op">"</span><span class="st">E-Book</span><span class="op">",</span>   <span class="nm">12.99</span><span class="op">),</span>
+  <span class="kw">new</span> <span class="ty">PhysicalProduct</span><span class="op">(</span><span class="op">"</span><span class="st">Keyboard</span><span class="op">",</span> <span class="nm">149</span><span class="op">,</span> <span class="nm">0.8</span><span class="op">),</span>
+<span class="op">];</span>
+
+<span class="kw">const</span> <span class="pr">total</span> <span class="op">=</span> <span class="pr">cart</span><span class="op">.</span><span class="fn">reduce</span><span class="op">((</span><span class="pr">sum</span><span class="op">,</span> <span class="pr">p</span><span class="op">) =&gt;</span> <span class="pr">sum</span> <span class="op">+</span> <span class="pr">p</span><span class="op">.</span><span class="pr">totalCost</span><span class="op">,</span> <span class="nm">0</span><span class="op">);</span>
+<span class="pr">cart</span><span class="op">.</span><span class="fn">forEach</span><span class="op">(</span><span class="pr">p</span> <span class="op">=&gt;</span> <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">p</span><span class="op">.</span><span class="fn">toString</span><span class="op">()));</span>
+<span class="cm">// [Physical] #1 Laptop — $1004.25</span>
+<span class="cm">// [Digital]  #2 E-Book — $12.99</span>
+<span class="cm">// [Physical] #3 Keyboard — $151.00</span>
+</pre>
+  </div>
+
+  <div class="callout tip">
+    <span class="ci">💡</span>
+    <div class="cb2">
+      <strong>super() Must Be First in Constructors</strong>
+      <p>In TypeScript (and JS), you cannot access <code>this</code> in a subclass constructor before calling <code>super()</code>. The parent must initialize first. The TypeScript compiler will catch this as an error: "super must be called before accessing this."</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ POLYMORPHISM ════════════════════════════════ -->
+<section id="polymorphism">
+<div class="container">
+  <div class="sec-tag">Chapter 07</div>
+  <h2>POLYMORPHISM — <span>ONE NAME, MANY FORMS</span></h2>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">polymorphism.ts — method overriding + type narrowing</span></div>
+    <pre>
+<span class="cm">// Shape hierarchy with runtime polymorphism</span>
+<span class="kw">abstract class</span> <span class="ty">Shape</span> <span class="op">{</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="kw">public</span> <span class="kw">readonly</span> <span class="pr">color</span><span class="op">:</span> <span class="ty">string</span> <span class="op">=</span> <span class="op">"</span><span class="st">black</span><span class="op">"</span><span class="op">) {}</span>
+  <span class="kw">abstract</span> <span class="kw">get</span> <span class="fn">area</span><span class="op">():</span>      <span class="ty">number</span><span class="op">;</span>
+  <span class="kw">abstract</span> <span class="kw">get</span> <span class="fn">perimeter</span><span class="op">():</span> <span class="ty">number</span><span class="op">;</span>
+  <span class="kw">abstract</span> <span class="fn">scale</span><span class="op">(</span><span class="pr">factor</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">Shape</span><span class="op">;</span>  <span class="cm">// returns same type</span>
+
+  <span class="fn">describe</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">`${</span><span class="kw">this</span><span class="op">.</span><span class="pr">color</span><span class="op">} ${</span><span class="kw">this</span><span class="op">.</span><span class="kw">constructor</span><span class="op">.</span><span class="pr">name</span><span class="op">}:</span>
+<span class="st">      area=${this.area.toFixed(2)},</span>
+<span class="st">      perim=${this.perimeter.toFixed(2)}</span><span class="op">`</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">Circle</span> <span class="kw">extends</span> <span class="ty">Shape</span> <span class="op">{</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="kw">public</span> <span class="pr">radius</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">color</span><span class="op">?:</span> <span class="ty">string</span><span class="op">) {</span>
+    <span class="kw">super</span><span class="op">(</span><span class="pr">color</span><span class="op">);</span>
+  <span class="op">}</span>
+  <span class="kw">get</span> <span class="fn">area</span><span class="op">():</span>      <span class="ty">number</span> <span class="op">{</span> <span class="kw">return</span> <span class="ty">Math</span><span class="op">.</span><span class="pr">PI</span> <span class="op">*</span> <span class="kw">this</span><span class="op">.</span><span class="pr">radius</span> <span class="op">**</span> <span class="nm">2</span><span class="op">; }</span>
+  <span class="kw">get</span> <span class="fn">perimeter</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span> <span class="kw">return</span> <span class="nm">2</span> <span class="op">*</span> <span class="ty">Math</span><span class="op">.</span><span class="pr">PI</span> <span class="op">*</span> <span class="kw">this</span><span class="op">.</span><span class="pr">radius</span><span class="op">; }</span>
+  <span class="fn">scale</span><span class="op">(</span><span class="pr">f</span><span class="op">:</span><span class="ty">number</span><span class="op">):</span>  <span class="ty">Circle</span>  <span class="op">{</span> <span class="kw">return</span> <span class="kw">new</span> <span class="ty">Circle</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">radius</span> <span class="op">*</span> <span class="pr">f</span><span class="op">,</span> <span class="kw">this</span><span class="op">.</span><span class="pr">color</span><span class="op">); }</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">Rectangle</span> <span class="kw">extends</span> <span class="ty">Shape</span> <span class="op">{</span>
+  <span class="kw">constructor</span><span class="op">(</span>
+    <span class="kw">public</span> <span class="pr">width</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span>
+    <span class="kw">public</span> <span class="pr">height</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span>
+    <span class="pr">color</span><span class="op">?:</span> <span class="ty">string</span>
+  <span class="op">) {</span> <span class="kw">super</span><span class="op">(</span><span class="pr">color</span><span class="op">); }</span>
+
+  <span class="kw">get</span> <span class="fn">area</span><span class="op">():</span>      <span class="ty">number</span>    <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">width</span> <span class="op">*</span> <span class="kw">this</span><span class="op">.</span><span class="pr">height</span><span class="op">; }</span>
+  <span class="kw">get</span> <span class="fn">perimeter</span><span class="op">():</span> <span class="ty">number</span>    <span class="op">{</span> <span class="kw">return</span> <span class="nm">2</span> <span class="op">* (</span><span class="kw">this</span><span class="op">.</span><span class="pr">width</span> <span class="op">+</span> <span class="kw">this</span><span class="op">.</span><span class="pr">height</span><span class="op">); }</span>
+  <span class="fn">scale</span><span class="op">(</span><span class="pr">f</span><span class="op">:</span><span class="ty">number</span><span class="op">):</span>  <span class="ty">Rectangle</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">Rectangle</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">width</span><span class="op">*</span><span class="pr">f</span><span class="op">,</span> <span class="kw">this</span><span class="op">.</span><span class="pr">height</span><span class="op">*</span><span class="pr">f</span><span class="op">,</span> <span class="kw">this</span><span class="op">.</span><span class="pr">color</span><span class="op">); }</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Type narrowing with instanceof ───────────────────────────</span>
+<span class="kw">function</span> <span class="fn">getDiameter</span><span class="op">(</span><span class="pr">s</span><span class="op">:</span> <span class="ty">Shape</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="pr">s</span> <span class="kw">instanceof</span> <span class="ty">Circle</span><span class="op">) {</span>
+    <span class="kw">return</span> <span class="op">`</span><span class="st">Diameter: ${(s.radius * 2).toFixed(2)}</span><span class="op">`</span><span class="op">;</span>  <span class="cm">// s is Circle here!</span>
+  <span class="op">}</span>
+  <span class="kw">return</span> <span class="op">"</span><span class="st">Not a circle</span><span class="op">"</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Polymorphic array — one loop, different behaviors ────────</span>
+<span class="kw">const</span> <span class="pr">shapes</span><span class="op">:</span> <span class="ty">Shape</span><span class="op">[] = [</span>
+  <span class="kw">new</span> <span class="ty">Circle</span><span class="op">(</span><span class="nm">5</span><span class="op">,</span> <span class="op">"</span><span class="st">red</span><span class="op">"</span><span class="op">),</span>
+  <span class="kw">new</span> <span class="ty">Rectangle</span><span class="op">(</span><span class="nm">4</span><span class="op">,</span> <span class="nm">6</span><span class="op">,</span> <span class="op">"</span><span class="st">blue</span><span class="op">"</span><span class="op">),</span>
+  <span class="kw">new</span> <span class="ty">Circle</span><span class="op">(</span><span class="nm">3</span><span class="op">,</span> <span class="op">"</span><span class="st">green</span><span class="op">"</span><span class="op">),</span>
+<span class="op">];</span>
+
+<span class="kw">const</span> <span class="pr">totalArea</span> <span class="op">=</span> <span class="pr">shapes</span>
+  <span class="op">.</span><span class="fn">reduce</span><span class="op">((</span><span class="pr">sum</span><span class="op">,</span> <span class="pr">s</span><span class="op">) =&gt;</span> <span class="pr">sum</span> <span class="op">+</span> <span class="pr">s</span><span class="op">.</span><span class="pr">area</span><span class="op">,</span> <span class="nm">0</span><span class="op">);</span>  <span class="cm">// dynamic dispatch!</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">`</span><span class="st">Total area: ${totalArea.toFixed(2)}</span><span class="op">`</span><span class="op">);</span>
+</pre>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ ABSTRACTION ════════════════════════════════ -->
+<section id="abstraction">
+<div class="container">
+  <div class="sec-tag">Chapter 08</div>
+  <h2>ABSTRACTION — <span>HIDE THE COMPLEXITY</span></h2>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">abstraction.ts — abstract classes + template method pattern</span></div>
+    <pre>
+<span class="cm">// The Template Method Pattern — abstraction in action</span>
+<span class="kw">abstract class</span> <span class="ty">DataProcessor</span> <span class="op">{</span>
+
+  <span class="cm">// Template method — defines the ALGORITHM skeleton</span>
+  <span class="cm">// Subclasses override individual steps, not the whole thing</span>
+  <span class="kw">final</span> <span class="fn">process</span><span class="op">(</span><span class="pr">data</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">const</span> <span class="pr">raw</span>       <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fn">readData</span><span class="op">(</span><span class="pr">data</span><span class="op">);</span>
+    <span class="kw">const</span> <span class="pr">validated</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fn">validate</span><span class="op">(</span><span class="pr">raw</span><span class="op">);</span>
+    <span class="kw">const</span> <span class="pr">processed</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fn">transform</span><span class="op">(</span><span class="pr">validated</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="fn">format</span><span class="op">(</span><span class="pr">processed</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="cm">// Hooks — subclasses override these</span>
+  <span class="kw">protected abstract</span> <span class="fn">readData</span><span class="op">(</span><span class="pr">input</span><span class="op">:</span>   <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span><span class="op">;</span>
+  <span class="kw">protected abstract</span> <span class="fn">transform</span><span class="op">(</span><span class="pr">data</span><span class="op">:</span>    <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span><span class="op">;</span>
+
+  <span class="cm">// Default implementations — can be overridden</span>
+  <span class="kw">protected</span> <span class="fn">validate</span><span class="op">(</span><span class="pr">data</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(!</span><span class="pr">data</span><span class="op">.</span><span class="fn">trim</span><span class="op">())</span> <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">Error</span><span class="op">(</span><span class="op">"</span><span class="st">Empty data</span><span class="op">"</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="pr">data</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">protected</span> <span class="fn">format</span><span class="op">(</span><span class="pr">data</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="pr">data</span><span class="op">.</span><span class="fn">trim</span><span class="op">();</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// Concrete CSV Processor</span>
+<span class="kw">class</span> <span class="ty">CsvProcessor</span> <span class="kw">extends</span> <span class="ty">DataProcessor</span> <span class="op">{</span>
+  <span class="kw">protected</span> <span class="fn">readData</span><span class="op">(</span><span class="pr">input</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="pr">input</span><span class="op">.</span><span class="fn">replace</span><span class="op">(</span><span class="op">/</span><span class="st">\r\n</span><span class="op">/</span><span class="st">g</span><span class="op">,</span> <span class="op">"</span><span class="st">\n</span><span class="op">"</span><span class="op">);</span>  <span class="cm">// normalize newlines</span>
+  <span class="op">}</span>
+
+  <span class="kw">protected</span> <span class="fn">transform</span><span class="op">(</span><span class="pr">data</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">const</span> <span class="pr">rows</span> <span class="op">=</span> <span class="pr">data</span><span class="op">.</span><span class="fn">split</span><span class="op">(</span><span class="op">"</span><span class="st">\n</span><span class="op">"</span><span class="op">);</span>
+    <span class="kw">const</span> <span class="pr">headers</span> <span class="op">=</span> <span class="pr">rows</span><span class="op">[</span><span class="nm">0</span><span class="op">].</span><span class="fn">split</span><span class="op">(</span><span class="op">"</span><span class="st">,</span><span class="op">"</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="op">`</span><span class="st">CSV with ${rows.length} rows, ${headers.length} cols</span><span class="op">`</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">protected</span> <span class="fn">format</span><span class="op">(</span><span class="pr">data</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">`</span><span class="st">📊 RESULT: ${super.format(data)}</span><span class="op">`</span><span class="op">;</span>  <span class="cm">// calls parent!</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">JsonProcessor</span> <span class="kw">extends</span> <span class="ty">DataProcessor</span> <span class="op">{</span>
+  <span class="kw">protected</span> <span class="fn">readData</span><span class="op">(</span><span class="pr">input</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="ty">JSON</span><span class="op">.</span><span class="fn">parse</span><span class="op">(</span><span class="pr">input</span><span class="op">);</span>  <span class="cm">// throws if invalid JSON</span>
+    <span class="kw">return</span> <span class="pr">input</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">protected</span> <span class="fn">transform</span><span class="op">(</span><span class="pr">data</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">const</span> <span class="pr">parsed</span> <span class="op">=</span> <span class="ty">JSON</span><span class="op">.</span><span class="fn">parse</span><span class="op">(</span><span class="pr">data</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="ty">JSON</span><span class="op">.</span><span class="fn">stringify</span><span class="op">(</span><span class="pr">parsed</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="nm">2</span><span class="op">);</span>  <span class="cm">// pretty print</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">const</span> <span class="pr">csv</span>  <span class="op">=</span> <span class="kw">new</span> <span class="ty">CsvProcessor</span><span class="op">();</span>
+<span class="kw">const</span> <span class="pr">json</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">JsonProcessor</span><span class="op">();</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">csv</span><span class="op">.</span><span class="fn">process</span><span class="op">(</span><span class="op">"</span><span class="st">name,age\nAlice,30</span><span class="op">"</span><span class="op">));</span>
+</pre>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ INTERFACES ════════════════════════════════ -->
+<section id="interfaces">
+<div class="container">
+  <div class="sec-tag">Chapter 09</div>
+  <h2>INTERFACES — <span>TYPESCRIPT'S SUPERPOWER</span></h2>
+
+  <p>TypeScript interfaces are pure type contracts — they exist only at compile time and have zero runtime cost. They enable structural typing (duck typing with validation).</p>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">interfaces-complete.ts</span></div>
+    <pre>
+<span class="cm">// ── Basic interface ───────────────────────────────────────────</span>
+<span class="kw">interface</span> <span class="ty">Serializable</span> <span class="op">{</span>
+  <span class="fn">serialize</span><span class="op">():</span>                  <span class="ty">string</span><span class="op">;</span>
+  <span class="fn">deserialize</span><span class="op">(</span><span class="pr">data</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span>  <span class="ty">void</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Interface with optional + readonly props ─────────────────</span>
+<span class="kw">interface</span> <span class="ty">UserProfile</span> <span class="op">{</span>
+  <span class="kw">readonly</span> <span class="pr">id</span><span class="op">:</span>      <span class="ty">number</span><span class="op">;</span>
+  <span class="pr">username</span><span class="op">:</span>          <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">email</span><span class="op">:</span>             <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">bio</span><span class="op">?:</span>               <span class="ty">string</span><span class="op">;</span>          <span class="cm">// optional</span>
+  <span class="pr">avatar</span><span class="op">?:</span>            <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">createdAt</span><span class="op">:</span>         <span class="ty">Date</span><span class="op">;</span>
+  <span class="fn">toDisplayName</span><span class="op">():</span>  <span class="ty">string</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Interface extending multiple interfaces ───────────────────</span>
+<span class="kw">interface</span> <span class="ty">AdminProfile</span> <span class="kw">extends</span> <span class="ty">UserProfile</span><span class="op">,</span> <span class="ty">Serializable</span> <span class="op">{</span>
+  <span class="pr">permissions</span><span class="op">:</span>  <span class="ty">string</span><span class="op">[];</span>
+  <span class="pr">lastLogin</span><span class="op">:</span>    <span class="ty">Date</span><span class="op">;</span>
+  <span class="fn">revokeUser</span><span class="op">(</span><span class="pr">userId</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">void</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Class implementing multiple interfaces ────────────────────</span>
+<span class="kw">class</span> <span class="ty">AdminUser</span> <span class="kw">implements</span> <span class="ty">AdminProfile</span> <span class="op">{</span>
+  <span class="kw">readonly</span> <span class="pr">id</span><span class="op">:</span>     <span class="ty">number</span><span class="op">;</span>
+  <span class="pr">username</span><span class="op">:</span>         <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">email</span><span class="op">:</span>            <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">bio</span><span class="op">?:</span>              <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">avatar</span><span class="op">?:</span>           <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">createdAt</span><span class="op">:</span>        <span class="ty">Date</span><span class="op">;</span>
+  <span class="pr">permissions</span><span class="op">:</span>  <span class="ty">string</span><span class="op">[];</span>
+  <span class="pr">lastLogin</span><span class="op">:</span>    <span class="ty">Date</span><span class="op">;</span>
+
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">id</span><span class="op">:</span><span class="ty">number</span><span class="op">,</span> <span class="pr">username</span><span class="op">:</span><span class="ty">string</span><span class="op">,</span> <span class="pr">email</span><span class="op">:</span><span class="ty">string</span><span class="op">) {</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">id</span>          <span class="op">=</span> <span class="pr">id</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">username</span>    <span class="op">=</span> <span class="pr">username</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">email</span>       <span class="op">=</span> <span class="pr">email</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">createdAt</span>   <span class="op">=</span> <span class="kw">new</span> <span class="ty">Date</span><span class="op">();</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">lastLogin</span>   <span class="op">=</span> <span class="kw">new</span> <span class="ty">Date</span><span class="op">();</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">permissions</span> <span class="op">= [</span><span class="op">"</span><span class="st">read</span><span class="op">",</span> <span class="op">"</span><span class="st">write</span><span class="op">",</span> <span class="op">"</span><span class="st">admin</span><span class="op">"</span><span class="op">];</span>
+  <span class="op">}</span>
+
+  <span class="fn">toDisplayName</span><span class="op">():</span> <span class="ty">string</span>     <span class="op">{</span> <span class="kw">return</span> <span class="op">`@${</span><span class="kw">this</span><span class="op">.</span><span class="pr">username</span><span class="op">} (Admin)`</span><span class="op">; }</span>
+  <span class="fn">serialize</span><span class="op">():</span>     <span class="ty">string</span>     <span class="op">{</span> <span class="kw">return</span> <span class="ty">JSON</span><span class="op">.</span><span class="fn">stringify</span><span class="op">(</span><span class="kw">this</span><span class="op">); }</span>
+  <span class="fn">deserialize</span><span class="op">(</span><span class="pr">d</span><span class="op">:</span><span class="ty">string</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="kw">const</span> <span class="pr">parsed</span> <span class="op">=</span> <span class="ty">JSON</span><span class="op">.</span><span class="fn">parse</span><span class="op">(</span><span class="pr">d</span><span class="op">);</span>
+    <span class="ty">Object</span><span class="op">.</span><span class="fn">assign</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> <span class="pr">parsed</span><span class="op">);</span>
+  <span class="op">}</span>
+  <span class="fn">revokeUser</span><span class="op">(</span><span class="pr">uid</span><span class="op">:</span><span class="ty">number</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">`</span><span class="st">Admin ${this.username} revoked user #${uid}</span><span class="op">`</span><span class="op">);</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Structural typing (duck typing) ─────────────────────────</span>
+<span class="kw">function</span> <span class="fn">printUser</span><span class="op">(</span><span class="pr">user</span><span class="op">:</span> <span class="ty">UserProfile</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+  <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">user</span><span class="op">.</span><span class="fn">toDisplayName</span><span class="op">());</span>
+<span class="op">}</span>
+
+<span class="cm">// Works for AdminUser (satisfies UserProfile structurally)</span>
+<span class="fn">printUser</span><span class="op">(</span><span class="kw">new</span> <span class="ty">AdminUser</span><span class="op">(</span><span class="nm">1</span><span class="op">,</span> <span class="op">"</span><span class="st">alice</span><span class="op">",</span> <span class="op">"</span><span class="st">a@b.com</span><span class="op">"</span><span class="op">));</span>
+</pre>
+  </div>
+
+  <h3>Interface vs Type Alias</h3>
+  <table class="tbl">
+    <thead><tr><th>Feature</th><th>interface</th><th>type alias</th></tr></thead>
+    <tbody>
+      <tr><td>Extend / merge</td><td><span class="tick">✓</span> Declaration merging</td><td><span class="cross">✗</span> Cannot re-open</td></tr>
+      <tr><td>Union types</td><td><span class="cross">✗</span></td><td><span class="tick">✓</span> <code>type A = B | C</code></td></tr>
+      <tr><td>Tuple types</td><td><span class="cross">✗</span></td><td><span class="tick">✓</span> <code>type T = [string, number]</code></td></tr>
+      <tr><td>Computed keys</td><td><span class="cross">✗</span></td><td><span class="tick">✓</span> Mapped types</td></tr>
+      <tr><td>Class implements</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+      <tr><td>Use for</td><td>Object shapes, APIs, contracts</td><td>Unions, tuples, utility types</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ════════════════════════════════ GENERICS ════════════════════════════════ -->
+<section id="generics">
+<div class="container">
+  <div class="sec-tag">Chapter 10</div>
+  <h2>GENERICS — <span>TYPE-SAFE REUSABILITY</span></h2>
+
+  <p>Generics let you write classes and functions that work with <em>any type</em> while maintaining full type safety. No more casting, no more <code>any</code>.</p>
+
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">generics-oop.ts — generic classes and constraints</span></div>
+    <pre>
+<span class="cm">// ── Generic Stack ─────────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="ty">Stack</span><span class="op">&lt;</span><span class="ty">T</span><span class="op">&gt; {</span>
+  <span class="kw">private</span> <span class="pr">items</span><span class="op">:</span> <span class="ty">T</span><span class="op">[] = [];</span>
+
+  <span class="fn">push</span><span class="op">(</span><span class="pr">item</span><span class="op">:</span> <span class="ty">T</span><span class="op">):</span> <span class="ty">void</span>      <span class="op">{</span> <span class="kw">this</span><span class="op">.</span><span class="pr">items</span><span class="op">.</span><span class="fn">push</span><span class="op">(</span><span class="pr">item</span><span class="op">); }</span>
+  <span class="fn">pop</span><span class="op">():</span> <span class="ty">T</span> <span class="op">|</span> <span class="ty">undefined</span>    <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">items</span><span class="op">.</span><span class="fn">pop</span><span class="op">(); }</span>
+  <span class="fn">peek</span><span class="op">():</span> <span class="ty">T</span> <span class="op">|</span> <span class="ty">undefined</span>   <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">items</span><span class="op">.</span><span class="fn">at</span><span class="op">(-</span><span class="nm">1</span><span class="op">); }</span>
+  <span class="kw">get</span> <span class="fn">size</span><span class="op">():</span> <span class="ty">number</span>       <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">items</span><span class="op">.</span><span class="pr">length</span><span class="op">; }</span>
+  <span class="kw">get</span> <span class="fn">isEmpty</span><span class="op">():</span> <span class="ty">boolean</span>   <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">items</span><span class="op">.</span><span class="pr">length</span> <span class="op">=== 0</span><span class="op">; }</span>
+
+  <span class="cm">// toArray returns a typed copy — no 'any'!</span>
+  <span class="fn">toArray</span><span class="op">():</span> <span class="kw">readonly</span> <span class="ty">T</span><span class="op">[]</span> <span class="op">{</span> <span class="kw">return</span> <span class="op">[...</span><span class="kw">this</span><span class="op">.</span><span class="pr">items</span><span class="op">]; }</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Generic Repository (DB pattern) ──────────────────────────</span>
+<span class="kw">interface</span> <span class="ty">Entity</span> <span class="op">{</span>
+  <span class="pr">id</span><span class="op">:</span> <span class="ty">number</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">Repository</span><span class="op">&lt;</span><span class="ty">T</span> <span class="kw">extends</span> <span class="ty">Entity</span><span class="op">&gt; {</span>  <span class="cm">// T must have an id</span>
+  <span class="kw">private</span> <span class="pr">store</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Map</span><span class="op">&lt;</span><span class="ty">number</span><span class="op">,</span> <span class="ty">T</span><span class="op">&gt;();</span>
+
+  <span class="fn">save</span><span class="op">(</span><span class="pr">entity</span><span class="op">:</span> <span class="ty">T</span><span class="op">):</span> <span class="ty">T</span> <span class="op">{</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">store</span><span class="op">.</span><span class="fn">set</span><span class="op">(</span><span class="pr">entity</span><span class="op">.</span><span class="pr">id</span><span class="op">,</span> <span class="pr">entity</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="pr">entity</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="fn">findById</span><span class="op">(</span><span class="pr">id</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">T</span> <span class="op">|</span> <span class="ty">undefined</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">store</span><span class="op">.</span><span class="fn">get</span><span class="op">(</span><span class="pr">id</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="fn">findAll</span><span class="op">():</span> <span class="ty">T</span><span class="op">[]</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="ty">Array</span><span class="op">.</span><span class="fn">from</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">store</span><span class="op">.</span><span class="fn">values</span><span class="op">());</span>
+  <span class="op">}</span>
+
+  <span class="fn">delete</span><span class="op">(</span><span class="pr">id</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">boolean</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">store</span><span class="op">.</span><span class="fn">delete</span><span class="op">(</span><span class="pr">id</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="cm">// Generic method with constraint — find with any property</span>
+  <span class="fn">findWhere</span><span class="op">&lt;</span><span class="ty">K</span> <span class="kw">extends</span> <span class="kw">keyof</span> <span class="ty">T</span><span class="op">&gt;(</span><span class="pr">key</span><span class="op">:</span> <span class="ty">K</span><span class="op">,</span> <span class="pr">value</span><span class="op">:</span> <span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">]):</span> <span class="ty">T</span><span class="op">[]</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="fn">findAll</span><span class="op">().</span><span class="fn">filter</span><span class="op">(</span><span class="pr">e</span> <span class="op">=&gt;</span> <span class="pr">e</span><span class="op">[</span><span class="pr">key</span><span class="op">] ===</span> <span class="pr">value</span><span class="op">);</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Usage — fully typed, no 'any' anywhere ───────────────────</span>
+<span class="kw">interface</span> <span class="ty">Product</span> <span class="kw">extends</span> <span class="ty">Entity</span> <span class="op">{</span>
+  <span class="pr">name</span><span class="op">:</span>  <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">price</span><span class="op">:</span> <span class="ty">number</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">const</span> <span class="pr">repo</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Repository</span><span class="op">&lt;</span><span class="ty">Product</span><span class="op">&gt;();</span>
+<span class="pr">repo</span><span class="op">.</span><span class="fn">save</span><span class="op">({</span> <span class="pr">id</span><span class="op">:</span> <span class="nm">1</span><span class="op">,</span> <span class="pr">name</span><span class="op">:</span> <span class="op">"</span><span class="st">Widget</span><span class="op">",</span> <span class="pr">price</span><span class="op">:</span> <span class="nm">9.99</span> <span class="op">});</span>
+<span class="pr">repo</span><span class="op">.</span><span class="fn">save</span><span class="op">({</span> <span class="pr">id</span><span class="op">:</span> <span class="nm">2</span><span class="op">,</span> <span class="pr">name</span><span class="op">:</span> <span class="op">"</span><span class="st">Gadget</span><span class="op">",</span> <span class="pr">price</span><span class="op">:</span> <span class="nm">19.99</span> <span class="op">});</span>
+
+<span class="kw">const</span> <span class="pr">cheap</span> <span class="op">=</span> <span class="pr">repo</span><span class="op">.</span><span class="fn">findWhere</span><span class="op">(</span><span class="op">"</span><span class="st">price</span><span class="op">",</span> <span class="nm">9.99</span><span class="op">);</span>  <span class="cm">// TypeScript knows this returns Product[]</span>
+<span class="kw">const</span> <span class="pr">nums</span>  <span class="op">=</span> <span class="kw">new</span> <span class="ty">Stack</span><span class="op">&lt;</span><span class="ty">number</span><span class="op">&gt;();</span>
+<span class="pr">nums</span><span class="op">.</span><span class="fn">push</span><span class="op">(</span><span class="nm">1</span><span class="op">);</span>
+<span class="cm">// nums.push("hello")  ← TS ERROR: Argument of type 'string' not assignable to 'number'</span>
+</pre>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ ADVANCED ════════════════════════════════ -->
+<section id="advanced">
+<div class="container">
+  <div class="sec-tag">Chapter 11</div>
+  <h2>ADVANCED PATTERNS <span>&amp; TECHNIQUES</span></h2>
+
+  <h3>Mixins — TypeScript's Multiple Inheritance Solution</h3>
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">mixins.ts</span></div>
+    <pre>
+<span class="cm">// A mixin is a function that takes a class and returns an extended class</span>
+<span class="kw">type</span> <span class="ty">Constructor</span><span class="op">&lt;</span><span class="ty">T</span> <span class="op">=</span> <span class="op">{}&gt; =</span> <span class="kw">new</span> <span class="op">(...</span><span class="pr">args</span><span class="op">:</span> <span class="ty">any</span><span class="op">[])</span> <span class="op">=&gt;</span> <span class="ty">T</span><span class="op">;</span>
+
+<span class="cm">// Mixin 1: Timestamped</span>
+<span class="kw">function</span> <span class="fn">Timestamped</span><span class="op">&lt;</span><span class="ty">TBase</span> <span class="kw">extends</span> <span class="ty">Constructor</span><span class="op">&gt;(</span><span class="ty">Base</span><span class="op">:</span> <span class="ty">TBase</span><span class="op">) {</span>
+  <span class="kw">return class extends</span> <span class="ty">Base</span> <span class="op">{</span>
+    <span class="pr">createdAt</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Date</span><span class="op">();</span>
+    <span class="pr">updatedAt</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Date</span><span class="op">();</span>
+
+    <span class="fn">touch</span><span class="op">():</span> <span class="ty">void</span> <span class="op">{</span> <span class="kw">this</span><span class="op">.</span><span class="pr">updatedAt</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Date</span><span class="op">(); }</span>
+  <span class="op">};</span>
+<span class="op">}</span>
+
+<span class="cm">// Mixin 2: Activatable</span>
+<span class="kw">function</span> <span class="fn">Activatable</span><span class="op">&lt;</span><span class="ty">TBase</span> <span class="kw">extends</span> <span class="ty">Constructor</span><span class="op">&gt;(</span><span class="ty">Base</span><span class="op">:</span> <span class="ty">TBase</span><span class="op">) {</span>
+  <span class="kw">return class extends</span> <span class="ty">Base</span> <span class="op">{</span>
+    <span class="pr">isActive</span> <span class="op">=</span> <span class="bl">true</span><span class="op">;</span>
+    <span class="fn">activate</span><span class="op">():</span>   <span class="ty">void</span> <span class="op">{</span> <span class="kw">this</span><span class="op">.</span><span class="pr">isActive</span> <span class="op">=</span> <span class="bl">true</span><span class="op">; }</span>
+    <span class="fn">deactivate</span><span class="op">():</span> <span class="ty">void</span> <span class="op">{</span> <span class="kw">this</span><span class="op">.</span><span class="pr">isActive</span> <span class="op">=</span> <span class="bl">false</span><span class="op">; }</span>
+  <span class="op">};</span>
+<span class="op">}</span>
+
+<span class="cm">// Base class</span>
+<span class="kw">class</span> <span class="ty">User</span> <span class="op">{</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="kw">public</span> <span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">) {}</span>
+<span class="op">}</span>
+
+<span class="cm">// Apply BOTH mixins — effectively "multiple inheritance"!</span>
+<span class="kw">class</span> <span class="ty">TimestampedActivatableUser</span> <span class="kw">extends</span>
+  <span class="fn">Timestamped</span><span class="op">(</span><span class="fn">Activatable</span><span class="op">(</span><span class="ty">User</span><span class="op">)) {}</span>
+
+<span class="kw">const</span> <span class="pr">user</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">TimestampedActivatableUser</span><span class="op">(</span><span class="op">"</span><span class="st">Alice</span><span class="op">"</span><span class="op">);</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">user</span><span class="op">.</span><span class="pr">name</span><span class="op">);</span>       <span class="cm">// Alice (from User)</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">user</span><span class="op">.</span><span class="pr">isActive</span><span class="op">);</span>   <span class="cm">// true (from Activatable)</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">user</span><span class="op">.</span><span class="pr">createdAt</span><span class="op">);</span>  <span class="cm">// Date (from Timestamped)</span>
+<span class="pr">user</span><span class="op">.</span><span class="fn">touch</span><span class="op">();</span>
+<span class="pr">user</span><span class="op">.</span><span class="fn">deactivate</span><span class="op">();</span>
+</pre>
+  </div>
+
+  <h3>Decorators — Metadata-Driven OOP</h3>
+  <div class="cb">
+    <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">decorators.ts — experimentalDecorators required</span></div>
+    <pre>
+<span class="cm">// Method decorator — logs every call</span>
+<span class="kw">function</span> <span class="fn">Log</span><span class="op">(</span>
+  <span class="pr">target</span><span class="op">:</span> <span class="ty">object</span><span class="op">,</span>
+  <span class="pr">key</span><span class="op">:</span> <span class="ty">string</span><span class="op">,</span>
+  <span class="pr">descriptor</span><span class="op">:</span> <span class="ty">PropertyDescriptor</span>
+<span class="op">):</span> <span class="ty">PropertyDescriptor</span> <span class="op">{</span>
+  <span class="kw">const</span> <span class="pr">original</span> <span class="op">=</span> <span class="pr">descriptor</span><span class="op">.</span><span class="pr">value</span><span class="op">;</span>
+
+  <span class="pr">descriptor</span><span class="op">.</span><span class="pr">value</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(...</span><span class="pr">args</span><span class="op">:</span> <span class="ty">unknown</span><span class="op">[]) {</span>
+    <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">`</span><span class="st">📞 ${key}(${args.join(", ")})</span><span class="op">`</span><span class="op">);</span>
+    <span class="kw">const</span> <span class="pr">result</span> <span class="op">=</span> <span class="pr">original</span><span class="op">.</span><span class="fn">apply</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> <span class="pr">args</span><span class="op">);</span>
+    <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">`</span><span class="st">✅ ${key} returned:`, result);</span>
+    <span class="kw">return</span> <span class="pr">result</span><span class="op">;</span>
+  <span class="op">};</span>
+  <span class="kw">return</span> <span class="pr">descriptor</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cm">// Property decorator — marks as required</span>
+<span class="kw">function</span> <span class="fn">Required</span><span class="op">(</span><span class="pr">target</span><span class="op">:</span><span class="ty">object</span><span class="op">,</span> <span class="pr">key</span><span class="op">:</span><span class="ty">string</span><span class="op">) {</span>
+  <span class="kw">let</span> <span class="pr">val</span><span class="op">:</span> <span class="ty">unknown</span><span class="op">;</span>
+  <span class="ty">Object</span><span class="op">.</span><span class="fn">defineProperty</span><span class="op">(</span><span class="pr">target</span><span class="op">,</span> <span class="pr">key</span><span class="op">, {</span>
+    <span class="kw">get</span><span class="op">() {</span> <span class="kw">return</span> <span class="pr">val</span><span class="op">; },</span>
+    <span class="kw">set</span><span class="op">(</span><span class="pr">v</span><span class="op">:</span> <span class="ty">unknown</span><span class="op">) {</span>
+      <span class="kw">if</span> <span class="op">(</span><span class="pr">v</span> <span class="op">=== null ||</span> <span class="pr">v</span> <span class="op">=== undefined</span> <span class="op">||</span> <span class="pr">v</span> <span class="op">=== ""</span><span class="op">)</span>
+        <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">Error</span><span class="op">(</span><span class="op">`</span><span class="st">${key} is required</span><span class="op">`</span><span class="op">);</span>
+      <span class="pr">val</span> <span class="op">=</span> <span class="pr">v</span><span class="op">;</span>
+    <span class="op">}</span>
+  <span class="op">});</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">OrderService</span> <span class="op">{</span>
+  <span class="de">@Required</span>
+  <span class="pr">apiKey</span><span class="op">!:</span> <span class="ty">string</span><span class="op">;</span>
+
+  <span class="de">@Log</span>
+  <span class="fn">createOrder</span><span class="op">(</span><span class="pr">userId</span><span class="op">:</span><span class="ty">number</span><span class="op">,</span> <span class="pr">amount</span><span class="op">:</span><span class="ty">number</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">`</span><span class="st">order-${userId}-${amount}</span><span class="op">`</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">const</span> <span class="pr">svc</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">OrderService</span><span class="op">();</span>
+<span class="pr">svc</span><span class="op">.</span><span class="pr">apiKey</span> <span class="op">=</span> <span class="op">"</span><span class="st">secret-123</span><span class="op">"</span><span class="op">;</span>
+<span class="pr">svc</span><span class="op">.</span><span class="fn">createOrder</span><span class="op">(</span><span class="nm">42</span><span class="op">,</span> <span class="nm">99.99</span><span class="op">);</span>
+<span class="cm">// 📞 createOrder(42, 99.99)</span>
+<span class="cm">// ✅ createOrder returned: order-42-99.99</span>
+</pre>
+  </div>
+
+  <h3>SOLID Principles in TypeScript</h3>
+  <div class="card-grid">
+    <div class="ccard c-blue"><span class="ccard-icon">🧱</span><h4>S — Single Responsibility</h4><p>A class does ONE thing. Split <code>UserService</code> into <code>UserAuthService</code> + <code>UserProfileService</code>.</p></div>
+    <div class="ccard c-cyan"><span class="ccard-icon">🔓</span><h4>O — Open/Closed</h4><p>Open for extension, closed for modification. Add new shapes via inheritance, don't edit the base Shape class.</p></div>
+    <div class="ccard c-green"><span class="ccard-icon">🔄</span><h4>L — Liskov Substitution</h4><p>A subclass should be usable wherever the parent is expected. Don't throw <code>NotImplemented</code> in overrides.</p></div>
+    <div class="ccard c-orange"><span class="ccard-icon">🎯</span><h4>I — Interface Segregation</h4><p>Many small interfaces over one big one. A <code>Readable</code> and <code>Writable</code> instead of one <code>ReadWrite</code>.</p></div>
+    <div class="ccard c-pink"><span class="ccard-icon">🔌</span><h4>D — Dependency Inversion</h4><p>Depend on abstractions (interfaces), not concretions. Pass <code>ILogger</code> not <code>ConsoleLogger</code> to constructors.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════ ASSIGNMENTS ════════════════════════════════ -->
+<section id="assignments">
+<div class="container">
+  <div class="sec-tag">Chapter 12 — Practical Work</div>
+  <h2>SAMPLE ASSIGNMENTS <span>WITH SOLUTIONS</span></h2>
+
+  <!-- Assignment 1 -->
+  <div class="assignment">
+    <div class="asgn-head">
+      <div class="asgn-num">01</div>
+      <div class="asgn-title">Library Management System</div>
+      <span class="asgn-difficulty diff-easy">Easy</span>
+    </div>
+    <div class="asgn-body">
+      <div class="asgn-task">
+        Create a <code>Book</code> class with properties: <code>isbn</code> (readonly), <code>title</code>, <code>author</code>, <code>isAvailable</code>. Create a <code>Library</code> class with methods: <code>addBook()</code>, <code>checkOut(isbn)</code>, <code>returnBook(isbn)</code>, <code>searchByAuthor(name)</code>. Use encapsulation, getters, and proper TypeScript types throughout.
+      </div>
+      <details>
+        <summary>View Solution</summary>
+        <div class="answer">
+          <div class="cb">
+            <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">library.ts</span></div>
+            <pre>
+<span class="kw">class</span> <span class="ty">Book</span> <span class="op">{</span>
+  <span class="kw">private</span> <span class="pr">_isAvailable</span><span class="op">:</span> <span class="ty">boolean</span> <span class="op">=</span> <span class="bl">true</span><span class="op">;</span>
+  <span class="kw">private</span> <span class="pr">_borrowedBy</span><span class="op">?:</span> <span class="ty">string</span><span class="op">;</span>
+
+  <span class="kw">constructor</span><span class="op">(</span>
+    <span class="kw">public</span> <span class="kw">readonly</span> <span class="pr">isbn</span><span class="op">:</span>   <span class="ty">string</span><span class="op">,</span>
+    <span class="kw">public</span>           <span class="pr">title</span><span class="op">:</span>  <span class="ty">string</span><span class="op">,</span>
+    <span class="kw">public</span> <span class="kw">readonly</span> <span class="pr">author</span><span class="op">:</span> <span class="ty">string</span>
+  <span class="op">) {}</span>
+
+  <span class="kw">get</span> <span class="fn">isAvailable</span><span class="op">():</span> <span class="ty">boolean</span>         <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">_isAvailable</span><span class="op">; }</span>
+  <span class="kw">get</span> <span class="fn">borrowedBy</span><span class="op">():</span>  <span class="ty">string</span> <span class="op">|</span> <span class="ty">undefined</span> <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">_borrowedBy</span><span class="op">; }</span>
+
+  <span class="fn">checkOut</span><span class="op">(</span><span class="pr">borrower</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">boolean</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(!</span><span class="kw">this</span><span class="op">.</span><span class="pr">_isAvailable</span><span class="op">)</span> <span class="kw">return</span> <span class="bl">false</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">_isAvailable</span> <span class="op">=</span> <span class="bl">false</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">_borrowedBy</span>  <span class="op">=</span> <span class="pr">borrower</span><span class="op">;</span>
+    <span class="kw">return</span> <span class="bl">true</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="fn">returnBook</span><span class="op">():</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">_isAvailable</span> <span class="op">=</span> <span class="bl">true</span><span class="op">;</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">_borrowedBy</span>  <span class="op">=</span> <span class="kw">undefined</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="fn">toString</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">const</span> <span class="pr">status</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="pr">_isAvailable</span>
+      <span class="op">?</span> <span class="op">"</span><span class="st">Available</span><span class="op">"</span>
+      <span class="op">:</span> <span class="op">`</span><span class="st">Borrowed by ${this._borrowedBy}</span><span class="op">`</span><span class="op">;</span>
+    <span class="kw">return</span> <span class="op">`"${</span><span class="kw">this</span><span class="op">.</span><span class="pr">title</span><span class="op">}" by ${</span><span class="kw">this</span><span class="op">.</span><span class="pr">author</span><span class="op">} [${</span><span class="pr">status</span><span class="op">}]`</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">Library</span> <span class="op">{</span>
+  <span class="kw">private</span> <span class="pr">books</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Map</span><span class="op">&lt;</span><span class="ty">string</span><span class="op">,</span> <span class="ty">Book</span><span class="op">&gt;();</span>
+
+  <span class="fn">addBook</span><span class="op">(</span><span class="pr">book</span><span class="op">:</span> <span class="ty">Book</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">books</span><span class="op">.</span><span class="fn">has</span><span class="op">(</span><span class="pr">book</span><span class="op">.</span><span class="pr">isbn</span><span class="op">))</span>
+      <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">Error</span><span class="op">(</span><span class="op">`</span><span class="st">ISBN ${book.isbn} already exists</span><span class="op">`</span><span class="op">);</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">books</span><span class="op">.</span><span class="fn">set</span><span class="op">(</span><span class="pr">book</span><span class="op">.</span><span class="pr">isbn</span><span class="op">,</span> <span class="pr">book</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="fn">checkOut</span><span class="op">(</span><span class="pr">isbn</span><span class="op">:</span><span class="ty">string</span><span class="op">,</span> <span class="pr">borrower</span><span class="op">:</span><span class="ty">string</span><span class="op">):</span> <span class="ty">boolean</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">books</span><span class="op">.</span><span class="fn">get</span><span class="op">(</span><span class="pr">isbn</span><span class="op">)?.</span><span class="fn">checkOut</span><span class="op">(</span><span class="pr">borrower</span><span class="op">) ??</span> <span class="bl">false</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="fn">returnBook</span><span class="op">(</span><span class="pr">isbn</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">books</span><span class="op">.</span><span class="fn">get</span><span class="op">(</span><span class="pr">isbn</span><span class="op">)?.</span><span class="fn">returnBook</span><span class="op">();</span>
+  <span class="op">}</span>
+
+  <span class="fn">searchByAuthor</span><span class="op">(</span><span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">Book</span><span class="op">[]</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">[...</span><span class="kw">this</span><span class="op">.</span><span class="pr">books</span><span class="op">.</span><span class="fn">values</span><span class="op">()]</span>
+      <span class="op">.</span><span class="fn">filter</span><span class="op">(</span><span class="pr">b</span> <span class="op">=&gt;</span> <span class="pr">b</span><span class="op">.</span><span class="pr">author</span><span class="op">.</span><span class="fn">toLowerCase</span><span class="op">().</span><span class="fn">includes</span><span class="op">(</span><span class="pr">name</span><span class="op">.</span><span class="fn">toLowerCase</span><span class="op">()));</span>
+  <span class="op">}</span>
+
+  <span class="kw">get</span> <span class="fn">totalBooks</span><span class="op">():</span>     <span class="ty">number</span> <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">books</span><span class="op">.</span><span class="pr">size</span><span class="op">; }</span>
+  <span class="kw">get</span> <span class="fn">availableBooks</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">[...</span><span class="kw">this</span><span class="op">.</span><span class="pr">books</span><span class="op">.</span><span class="fn">values</span><span class="op">()].</span><span class="fn">filter</span><span class="op">(</span><span class="pr">b</span> <span class="op">=&gt;</span> <span class="pr">b</span><span class="op">.</span><span class="pr">isAvailable</span><span class="op">).</span><span class="pr">length</span><span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// Test it</span>
+<span class="kw">const</span> <span class="pr">lib</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Library</span><span class="op">();</span>
+<span class="pr">lib</span><span class="op">.</span><span class="fn">addBook</span><span class="op">(</span><span class="kw">new</span> <span class="ty">Book</span><span class="op">(</span><span class="op">"</span><span class="st">978-0-7432-7356-5</span><span class="op">",</span> <span class="op">"</span><span class="st">The Hobbit</span><span class="op">",</span> <span class="op">"</span><span class="st">J.R.R. Tolkien</span><span class="op">"</span><span class="op">));</span>
+<span class="pr">lib</span><span class="op">.</span><span class="fn">addBook</span><span class="op">(</span><span class="kw">new</span> <span class="ty">Book</span><span class="op">(</span><span class="op">"</span><span class="st">978-0-7432-7357-2</span><span class="op">",</span> <span class="op">"</span><span class="st">LOTR</span><span class="op">",</span>       <span class="op">"</span><span class="st">J.R.R. Tolkien</span><span class="op">"</span><span class="op">));</span>
+<span class="pr">lib</span><span class="op">.</span><span class="fn">checkOut</span><span class="op">(</span><span class="op">"</span><span class="st">978-0-7432-7356-5</span><span class="op">",</span> <span class="op">"</span><span class="st">Alice</span><span class="op">"</span><span class="op">);</span>
+<span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">lib</span><span class="op">.</span><span class="fn">searchByAuthor</span><span class="op">(</span><span class="op">"</span><span class="st">tolkien</span><span class="op">"</span><span class="op">));</span>
+</pre>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Assignment 2 -->
+  <div class="assignment">
+    <div class="asgn-head">
+      <div class="asgn-num">02</div>
+      <div class="asgn-title">Generic Event Emitter</div>
+      <span class="asgn-difficulty diff-med">Medium</span>
+    </div>
+    <div class="asgn-body">
+      <div class="asgn-task">
+        Build a type-safe <code>EventEmitter&lt;T&gt;</code> class where T is a map of event name → handler type. It should have <code>on(event, handler)</code>, <code>off(event, handler)</code>, <code>emit(event, ...args)</code>, and <code>once(event, handler)</code>. Fully typed — no <code>any</code> allowed. The compiler should catch calling <code>emit</code> with wrong arguments.
+      </div>
+      <details>
+        <summary>View Solution</summary>
+        <div class="answer">
+          <div class="cb">
+            <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">event-emitter.ts</span></div>
+            <pre>
+<span class="kw">type</span> <span class="ty">EventMap</span> <span class="op">=</span> <span class="ty">Record</span><span class="op">&lt;</span><span class="ty">string</span><span class="op">,</span> <span class="op">(...</span><span class="pr">args</span><span class="op">:</span> <span class="ty">any</span><span class="op">[]) =&gt;</span> <span class="ty">void</span><span class="op">&gt;;</span>
+
+<span class="kw">class</span> <span class="ty">TypedEventEmitter</span><span class="op">&lt;</span><span class="ty">T</span> <span class="kw">extends</span> <span class="ty">EventMap</span><span class="op">&gt; {</span>
+  <span class="kw">private</span> <span class="pr">listeners</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Map</span><span class="op">&lt;</span><span class="ty">keyof T</span><span class="op">,</span> <span class="ty">Set</span><span class="op">&lt;</span><span class="ty">Function</span><span class="op">&gt;&gt;();</span>
+
+  <span class="fn">on</span><span class="op">&lt;</span><span class="ty">K</span> <span class="kw">extends</span> <span class="kw">keyof</span> <span class="ty">T</span><span class="op">&gt;(</span><span class="pr">event</span><span class="op">:</span> <span class="ty">K</span><span class="op">,</span> <span class="pr">handler</span><span class="op">:</span> <span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">]):</span> <span class="kw">this</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(!</span><span class="kw">this</span><span class="op">.</span><span class="pr">listeners</span><span class="op">.</span><span class="fn">has</span><span class="op">(</span><span class="pr">event</span><span class="op">))</span>
+      <span class="kw">this</span><span class="op">.</span><span class="pr">listeners</span><span class="op">.</span><span class="fn">set</span><span class="op">(</span><span class="pr">event</span><span class="op">,</span> <span class="kw">new</span> <span class="ty">Set</span><span class="op">());</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">listeners</span><span class="op">.</span><span class="fn">get</span><span class="op">(</span><span class="pr">event</span><span class="op">)!.</span><span class="fn">add</span><span class="op">(</span><span class="pr">handler</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="fn">off</span><span class="op">&lt;</span><span class="ty">K</span> <span class="kw">extends</span> <span class="kw">keyof</span> <span class="ty">T</span><span class="op">&gt;(</span><span class="pr">event</span><span class="op">:</span> <span class="ty">K</span><span class="op">,</span> <span class="pr">handler</span><span class="op">:</span> <span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">]):</span> <span class="kw">this</span> <span class="op">{</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">listeners</span><span class="op">.</span><span class="fn">get</span><span class="op">(</span><span class="pr">event</span><span class="op">)?.</span><span class="fn">delete</span><span class="op">(</span><span class="pr">handler</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="fn">emit</span><span class="op">&lt;</span><span class="ty">K</span> <span class="kw">extends</span> <span class="kw">keyof</span> <span class="ty">T</span><span class="op">&gt;(</span><span class="pr">event</span><span class="op">:</span> <span class="ty">K</span><span class="op">,</span> <span class="op">...</span><span class="pr">args</span><span class="op">:</span> <span class="ty">Parameters</span><span class="op">&lt;</span><span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">]&gt;):</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">listeners</span><span class="op">.</span><span class="fn">get</span><span class="op">(</span><span class="pr">event</span><span class="op">)?.</span><span class="fn">forEach</span><span class="op">(</span><span class="pr">h</span> <span class="op">=&gt;</span> <span class="pr">h</span><span class="op">(...</span><span class="pr">args</span><span class="op">));</span>
+  <span class="op">}</span>
+
+  <span class="fn">once</span><span class="op">&lt;</span><span class="ty">K</span> <span class="kw">extends</span> <span class="kw">keyof</span> <span class="ty">T</span><span class="op">&gt;(</span><span class="pr">event</span><span class="op">:</span> <span class="ty">K</span><span class="op">,</span> <span class="pr">handler</span><span class="op">:</span> <span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">]):</span> <span class="kw">this</span> <span class="op">{</span>
+    <span class="kw">const</span> <span class="pr">wrapper</span> <span class="op">= (...</span><span class="pr">args</span><span class="op">:</span> <span class="ty">Parameters</span><span class="op">&lt;</span><span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">]&gt;)</span> <span class="op">=&gt; {</span>
+      <span class="pr">handler</span><span class="op">(...</span><span class="pr">args</span><span class="op">);</span>
+      <span class="kw">this</span><span class="op">.</span><span class="fn">off</span><span class="op">(</span><span class="pr">event</span><span class="op">,</span> <span class="pr">wrapper</span> <span class="kw">as</span> <span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">]);</span>
+    <span class="op">};</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="fn">on</span><span class="op">(</span><span class="pr">event</span><span class="op">,</span> <span class="pr">wrapper</span> <span class="kw">as</span> <span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">]);</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// Usage — fully typed event map</span>
+<span class="kw">type</span> <span class="ty">AppEvents</span> <span class="op">= {</span>
+  <span class="pr">login</span><span class="op">:</span>   <span class="op">(</span><span class="pr">userId</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">email</span><span class="op">:</span> <span class="ty">string</span><span class="op">) =&gt;</span> <span class="ty">void</span><span class="op">;</span>
+  <span class="pr">logout</span><span class="op">:</span>  <span class="op">(</span><span class="pr">userId</span><span class="op">:</span> <span class="ty">number</span><span class="op">) =&gt;</span> <span class="ty">void</span><span class="op">;</span>
+  <span class="pr">message</span><span class="op">:</span> <span class="op">(</span><span class="pr">text</span><span class="op">:</span> <span class="ty">string</span><span class="op">,</span> <span class="pr">from</span><span class="op">:</span> <span class="ty">string</span><span class="op">) =&gt;</span> <span class="ty">void</span><span class="op">;</span>
+<span class="op">};</span>
+
+<span class="kw">const</span> <span class="pr">emitter</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">TypedEventEmitter</span><span class="op">&lt;</span><span class="ty">AppEvents</span><span class="op">&gt;();</span>
+
+<span class="pr">emitter</span>
+  <span class="op">.</span><span class="fn">on</span><span class="op">(</span><span class="op">"</span><span class="st">login</span><span class="op">",</span> <span class="op">(</span><span class="pr">id</span><span class="op">,</span> <span class="pr">email</span><span class="op">) =&gt;</span>
+    <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">`</span><span class="st">User #${id} logged in as ${email}</span><span class="op">`</span><span class="op">))</span>
+  <span class="op">.</span><span class="fn">on</span><span class="op">(</span><span class="op">"</span><span class="st">logout</span><span class="op">",</span> <span class="pr">id</span> <span class="op">=&gt;</span> <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">`</span><span class="st">User #${id} logged out</span><span class="op">`</span><span class="op">));</span>
+
+<span class="pr">emitter</span><span class="op">.</span><span class="fn">emit</span><span class="op">(</span><span class="op">"</span><span class="st">login</span><span class="op">",</span> <span class="nm">42</span><span class="op">,</span> <span class="op">"</span><span class="st">alice@test.com</span><span class="op">"</span><span class="op">);</span>
+<span class="cm">// emitter.emit("login", "wrong")  ← TS ERROR: number expected, got string</span>
+</pre>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Assignment 3 -->
+  <div class="assignment">
+    <div class="asgn-head">
+      <div class="asgn-num">03</div>
+      <div class="asgn-title">Strategy Pattern — Payment System</div>
+      <span class="asgn-difficulty diff-hard">Hard</span>
+    </div>
+    <div class="asgn-body">
+      <div class="asgn-task">
+        Implement a payment system using the <strong>Strategy Pattern</strong>. Create a <code>PaymentStrategy</code> interface. Implement <code>CreditCardStrategy</code>, <code>PayPalStrategy</code>, <code>CryptoStrategy</code>. Create a <code>ShoppingCart</code> class that accepts a strategy and processes payment. The strategy should be swappable at runtime. Include proper error handling and TypeScript types throughout.
+      </div>
+      <details>
+        <summary>View Solution</summary>
+        <div class="answer">
+          <div class="cb">
+            <div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">payment-strategy.ts</span></div>
+            <pre>
+<span class="cm">// ── Strategy interface ───────────────────────────────────────</span>
+<span class="kw">interface</span> <span class="ty">PaymentStrategy</span> <span class="op">{</span>
+  <span class="kw">readonly</span> <span class="pr">name</span><span class="op">:</span>   <span class="ty">string</span><span class="op">;</span>
+  <span class="fn">validate</span><span class="op">():</span>     <span class="ty">boolean</span><span class="op">;</span>
+  <span class="fn">pay</span><span class="op">(</span><span class="pr">amount</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">Promise</span><span class="op">&lt;</span><span class="ty">PaymentResult</span><span class="op">&gt;;</span>
+<span class="op">}</span>
+
+<span class="kw">interface</span> <span class="ty">PaymentResult</span> <span class="op">{</span>
+  <span class="pr">success</span><span class="op">:</span>   <span class="ty">boolean</span><span class="op">;</span>
+  <span class="pr">transId</span><span class="op">:</span>  <span class="ty">string</span><span class="op">;</span>
+  <span class="pr">message</span><span class="op">:</span>  <span class="ty">string</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Concrete strategies ──────────────────────────────────────</span>
+<span class="kw">class</span> <span class="ty">CreditCardStrategy</span> <span class="kw">implements</span> <span class="ty">PaymentStrategy</span> <span class="op">{</span>
+  <span class="kw">readonly</span> <span class="pr">name</span> <span class="op">=</span> <span class="op">"</span><span class="st">Credit Card</span><span class="op">"</span><span class="op">;</span>
+
+  <span class="kw">constructor</span><span class="op">(</span>
+    <span class="kw">private</span> <span class="pr">cardNumber</span><span class="op">:</span> <span class="ty">string</span><span class="op">,</span>
+    <span class="kw">private</span> <span class="pr">expiry</span><span class="op">:</span>     <span class="ty">string</span><span class="op">,</span>
+    <span class="kw">private</span> <span class="pr">cvv</span><span class="op">:</span>        <span class="ty">string</span>
+  <span class="op">) {}</span>
+
+  <span class="fn">validate</span><span class="op">():</span> <span class="ty">boolean</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">/^\d{16}$/.</span><span class="fn">test</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">cardNumber</span><span class="op">)</span>
+        <span class="op">&amp;&amp;</span> <span class="op">/^\d{3}$/.</span><span class="fn">test</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">cvv</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="kw">async</span> <span class="fn">pay</span><span class="op">(</span><span class="pr">amount</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">Promise</span><span class="op">&lt;</span><span class="ty">PaymentResult</span><span class="op">&gt; {</span>
+    <span class="kw">if</span> <span class="op">(!</span><span class="kw">this</span><span class="op">.</span><span class="fn">validate</span><span class="op">())</span>
+      <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">Error</span><span class="op">(</span><span class="op">"</span><span class="st">Invalid card details</span><span class="op">"</span><span class="op">);</span>
+    <span class="cm">// Simulate API call</span>
+    <span class="kw">await</span> <span class="kw">new</span> <span class="ty">Promise</span><span class="op">(</span><span class="pr">r</span> <span class="op">=&gt;</span> <span class="fn">setTimeout</span><span class="op">(</span><span class="pr">r</span><span class="op">,</span> <span class="nm">100</span><span class="op">));</span>
+    <span class="kw">return</span> <span class="op">{</span>
+      <span class="pr">success</span><span class="op">:</span>  <span class="bl">true</span><span class="op">,</span>
+      <span class="pr">transId</span><span class="op">:</span> <span class="op">`</span><span class="st">CC-${Date.now()}</span><span class="op">`</span><span class="op">,</span>
+      <span class="pr">message</span><span class="op">:</span> <span class="op">`</span><span class="st">Charged $${amount} to card ****${this.cardNumber.slice(-4)}</span><span class="op">`</span>
+    <span class="op">};</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">PayPalStrategy</span> <span class="kw">implements</span> <span class="ty">PaymentStrategy</span> <span class="op">{</span>
+  <span class="kw">readonly</span> <span class="pr">name</span> <span class="op">=</span> <span class="op">"</span><span class="st">PayPal</span><span class="op">"</span><span class="op">;</span>
+
+  <span class="kw">constructor</span><span class="op">(</span><span class="kw">private</span> <span class="pr">email</span><span class="op">:</span> <span class="ty">string</span><span class="op">) {}</span>
+
+  <span class="fn">validate</span><span class="op">():</span> <span class="ty">boolean</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="op">/^[^\s@]+@[^\s@]+\.[^\s@]+$/.</span><span class="fn">test</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">email</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="kw">async</span> <span class="fn">pay</span><span class="op">(</span><span class="pr">amount</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">Promise</span><span class="op">&lt;</span><span class="ty">PaymentResult</span><span class="op">&gt; {</span>
+    <span class="kw">await</span> <span class="kw">new</span> <span class="ty">Promise</span><span class="op">(</span><span class="pr">r</span> <span class="op">=&gt;</span> <span class="fn">setTimeout</span><span class="op">(</span><span class="pr">r</span><span class="op">,</span> <span class="nm">200</span><span class="op">));</span>
+    <span class="kw">return</span> <span class="op">{</span>
+      <span class="pr">success</span><span class="op">:</span>  <span class="bl">true</span><span class="op">,</span>
+      <span class="pr">transId</span><span class="op">:</span> <span class="op">`</span><span class="st">PP-${Date.now()}</span><span class="op">`</span><span class="op">,</span>
+      <span class="pr">message</span><span class="op">:</span> <span class="op">`</span><span class="st">$${amount} sent from PayPal (${this.email})</span><span class="op">`</span>
+    <span class="op">};</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// ── Context class ─────────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="ty">ShoppingCart</span> <span class="op">{</span>
+  <span class="kw">private</span> <span class="pr">items</span><span class="op">:</span> <span class="ty">Array</span><span class="op">&lt;{</span> <span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">;</span> <span class="pr">price</span><span class="op">:</span> <span class="ty">number</span> <span class="op">}&gt; = [];</span>
+  <span class="kw">private</span> <span class="pr">strategy</span><span class="op">:</span> <span class="ty">PaymentStrategy</span><span class="op">;</span>
+
+  <span class="kw">constructor</span><span class="op">(</span><span class="pr">strategy</span><span class="op">:</span> <span class="ty">PaymentStrategy</span><span class="op">) {</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">strategy</span> <span class="op">=</span> <span class="pr">strategy</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="cm">// Strategy is swappable at runtime!</span>
+  <span class="fn">setPaymentStrategy</span><span class="op">(</span><span class="pr">s</span><span class="op">:</span> <span class="ty">PaymentStrategy</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">strategy</span> <span class="op">=</span> <span class="pr">s</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="fn">addItem</span><span class="op">(</span><span class="pr">name</span><span class="op">:</span><span class="ty">string</span><span class="op">,</span> <span class="pr">price</span><span class="op">:</span><span class="ty">number</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+    <span class="kw">this</span><span class="op">.</span><span class="pr">items</span><span class="op">.</span><span class="fn">push</span><span class="op">({</span> <span class="pr">name</span><span class="op">,</span> <span class="pr">price</span> <span class="op">});</span>
+  <span class="op">}</span>
+
+  <span class="kw">get</span> <span class="fn">total</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">items</span><span class="op">.</span><span class="fn">reduce</span><span class="op">((</span><span class="pr">s</span><span class="op">,</span><span class="pr">i</span><span class="op">) =&gt;</span> <span class="pr">s</span> <span class="op">+</span> <span class="pr">i</span><span class="op">.</span><span class="pr">price</span><span class="op">,</span> <span class="nm">0</span><span class="op">);</span>
+  <span class="op">}</span>
+
+  <span class="kw">async</span> <span class="fn">checkout</span><span class="op">():</span> <span class="ty">Promise</span><span class="op">&lt;</span><span class="ty">PaymentResult</span><span class="op">&gt; {</span>
+    <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">`</span><span class="st">Paying $${this.total.toFixed(2)} via ${this.strategy.name}</span><span class="op">`</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">strategy</span><span class="op">.</span><span class="fn">pay</span><span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="pr">total</span><span class="op">);</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// Test</span>
+<span class="kw">const</span> <span class="pr">cart</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">ShoppingCart</span><span class="op">(</span><span class="kw">new</span> <span class="ty">CreditCardStrategy</span><span class="op">(</span><span class="op">"</span><span class="st">1234567890123456</span><span class="op">",</span><span class="op">"</span><span class="st">12/26</span><span class="op">",</span><span class="op">"</span><span class="st">123</span><span class="op">"</span><span class="op">));</span>
+<span class="pr">cart</span><span class="op">.</span><span class="fn">addItem</span><span class="op">(</span><span class="op">"</span><span class="st">TypeScript Book</span><span class="op">",</span> <span class="nm">49.99</span><span class="op">);</span>
+<span class="pr">cart</span><span class="op">.</span><span class="fn">addItem</span><span class="op">(</span><span class="op">"</span><span class="st">VS Code Theme</span><span class="op">",</span>  <span class="nm">9.99</span><span class="op">);</span>
+<span class="kw">const</span> <span class="pr">result</span> <span class="op">=</span> <span class="kw">await</span> <span class="pr">cart</span><span class="op">.</span><span class="fn">checkout</span><span class="op">();</span>
+
+<span class="cm">// Switch strategy at runtime!</span>
+<span class="pr">cart</span><span class="op">.</span><span class="fn">setPaymentStrategy</span><span class="op">(</span><span class="kw">new</span> <span class="ty">PayPalStrategy</span><span class="op">(</span><span class="op">"</span><span class="st">alice@paypal.com</span><span class="op">"</span><span class="op">));</span>
+</pre>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ════════════════════════════════ INTERVIEW ════════════════════════════════ -->
+<section id="interview">
+<div class="container">
+  <div class="sec-tag">Chapter 13</div>
+  <h2>25 INTERVIEW <span>QUESTIONS &amp; ANSWERS</span></h2>
+
+  <div class="iq-list">
+
+    <details class="iq">
+      <summary class="iq-q">
+        <span class="iq-num">Q01</span>
+        <span class="iq-text">What is the difference between <code>interface</code> and <code>type</code> in TypeScript OOP?<span class="iq-tag tag-ts">TypeScript</span></span>
+        <span class="iq-icon">+</span>
+      </summary>
+      <div class="iq-a">
+        <p><strong>Interface:</strong> Defines the shape of an object and supports declaration merging (multiple declarations of the same interface are merged). Best for defining contracts for classes and object shapes that others will implement or extend. You can re-open an interface across files.</p>
+        <p><strong>Type alias:</strong> More versatile — can represent unions, intersections, tuples, primitives. Cannot be re-opened after declaration. Better for computed types, utility types, or when you need union/intersection types.</p>
+        <div class="cb"><div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">interface vs type</span></div><pre>
+<span class="cm">// Interface — can be re-opened, implements works perfectly</span>
+<span class="kw">interface</span> <span class="ty">Animal</span> <span class="op">{</span> <span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">; }</span>
+<span class="kw">interface</span> <span class="ty">Animal</span> <span class="op">{</span> <span class="pr">age</span><span class="op">:</span> <span class="ty">number</span><span class="op">; }</span>  <span class="cm">// merged!</span>
+<span class="kw">class</span> <span class="ty">Dog</span> <span class="kw">implements</span> <span class="ty">Animal</span> <span class="op">{</span> <span class="pr">name</span><span class="op">=</span><span class="op">"Rex"</span><span class="op">;</span> <span class="pr">age</span><span class="op">=</span><span class="nm">3</span><span class="op">; }</span>
+
+<span class="cm">// Type — union support, can't re-open</span>
+<span class="kw">type</span> <span class="ty">Result</span> <span class="op">=</span> <span class="ty">string</span> <span class="op">|</span> <span class="ty">number</span><span class="op">;</span>  <span class="cm">// impossible with interface</span>
+<span class="kw">type</span> <span class="ty">Readonly</span><span class="op">&lt;</span><span class="ty">T</span><span class="op">&gt; = {</span> <span class="kw">readonly</span> <span class="op">[</span><span class="ty">K</span> <span class="kw">in</span> <span class="kw">keyof</span> <span class="ty">T</span><span class="op">]:</span> <span class="ty">T</span><span class="op">[</span><span class="ty">K</span><span class="op">] };</span>
+</pre></div>
+        <p><strong>Rule of thumb:</strong> Use <code>interface</code> for class contracts and public APIs. Use <code>type</code> for everything else.</p>
+      </div>
+    </details>
+
+    <details class="iq">
+      <summary class="iq-q">
+        <span class="iq-num">Q02</span>
+        <span class="iq-text">What is the difference between <code>abstract class</code> and <code>interface</code>?<span class="iq-tag tag-core">Core OOP</span></span>
+        <span class="iq-icon">+</span>
+      </summary>
+      <div class="iq-a">
+        <p>Both define contracts that subclasses must satisfy, but they differ fundamentally:</p>
+        <p><strong>Abstract class:</strong> Can have concrete implemented methods, a constructor, instance fields, and access modifiers. A class can only extend ONE abstract class. Use when subclasses share implementation code.</p>
+        <p><strong>Interface:</strong> Zero runtime cost — erased at compile time. No constructor, no field storage, only method signatures (plus default methods in TS). A class can implement MANY interfaces. Use for defining capabilities.</p>
+        <div class="cb"><div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">when to use which</span></div><pre>
+<span class="cm">// Abstract: shared code + is-a relationship</span>
+<span class="kw">abstract class</span> <span class="ty">Vehicle</span> <span class="op">{</span>
+  <span class="kw">protected</span> <span class="pr">fuel</span> <span class="op">=</span> <span class="nm">100</span><span class="op">;</span>   <span class="cm">// shared state</span>
+  <span class="fn">refuel</span><span class="op">() {</span> <span class="kw">this</span><span class="op">.</span><span class="pr">fuel</span> <span class="op">=</span> <span class="nm">100</span><span class="op">; }</span>  <span class="cm">// shared behavior</span>
+  <span class="kw">abstract</span> <span class="fn">drive</span><span class="op">():</span> <span class="ty">void</span><span class="op">;</span>  <span class="cm">// must implement</span>
+<span class="op">}</span>
+
+<span class="cm">// Interface: capability (can-do) contract</span>
+<span class="kw">interface</span> <span class="ty">Flyable</span> <span class="op">{</span>
+  <span class="fn">fly</span><span class="op">():</span> <span class="ty">void</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cm">// FlyingCar: IS-A Vehicle AND CAN fly</span>
+<span class="kw">class</span> <span class="ty">FlyingCar</span> <span class="kw">extends</span> <span class="ty">Vehicle</span> <span class="kw">implements</span> <span class="ty">Flyable</span> <span class="op">{</span>
+  <span class="fn">drive</span><span class="op">() {</span> <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">"</span><span class="st">driving</span><span class="op">"</span><span class="op">); }</span>
+  <span class="fn">fly</span><span class="op">()   {</span> <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="op">"</span><span class="st">flying</span><span class="op">"</span><span class="op">); }</span>
+<span class="op">}</span>
+</pre></div>
+      </div>
+    </details>
+
+    <details class="iq">
+      <summary class="iq-q">
+        <span class="iq-num">Q03</span>
+        <span class="iq-text">Explain TypeScript's structural typing. How does it differ from nominal typing?<span class="iq-tag tag-ts">TypeScript</span></span>
+        <span class="iq-icon">+</span>
+      </summary>
+      <div class="iq-a">
+        <p><strong>Structural typing (TypeScript):</strong> Type compatibility is determined by the <em>shape</em> of the object — its properties and methods. If object A has all the members that type B requires, A is compatible with B, even if they have no inheritance relationship.</p>
+        <p><strong>Nominal typing (Java, C#):</strong> Type compatibility is determined by explicit declarations. Two classes with identical structure are NOT compatible unless one extends the other or implements the same interface.</p>
+        <div class="cb"><div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">structural typing demo</span></div><pre>
+<span class="kw">interface</span> <span class="ty">Named</span> <span class="op">{</span> <span class="pr">name</span><span class="op">:</span> <span class="ty">string</span><span class="op">; }</span>
+
+<span class="kw">class</span> <span class="ty">Cat</span> <span class="op">{</span>
+  <span class="pr">name</span> <span class="op">=</span> <span class="op">"</span><span class="st">Whiskers</span><span class="op">"</span><span class="op">;</span>
+  <span class="pr">lives</span> <span class="op">=</span> <span class="nm">9</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="fn">greet</span><span class="op">(</span><span class="pr">n</span><span class="op">:</span> <span class="ty">Named</span><span class="op">):</span> <span class="ty">void</span> <span class="op">{</span>
+  <span class="pr">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="pr">n</span><span class="op">.</span><span class="pr">name</span><span class="op">);</span>
+<span class="op">}</span>
+
+<span class="cm">// Cat doesn't implement Named — but it HAS a name property</span>
+<span class="cm">// So TypeScript accepts it! (structural, not nominal)</span>
+<span class="fn">greet</span><span class="op">(</span><span class="kw">new</span> <span class="ty">Cat</span><span class="op">());</span>            <span class="cm">// ✓ works!</span>
+<span class="fn">greet</span><span class="op">({</span> <span class="pr">name</span><span class="op">:</span> <span class="op">"</span><span class="st">raw object</span><span class="op">"</span> <span class="op">});</span>  <span class="cm">// ✓ also works!</span>
+</pre></div>
+      </div>
+    </details>
+
+    <details class="iq">
+      <summary class="iq-q">
+        <span class="iq-num">Q04</span>
+        <span class="iq-text">What is method overriding vs method overloading? Are both supported in TypeScript?<span class="iq-tag tag-core">Core OOP</span></span>
+        <span class="iq-icon">+</span>
+      </summary>
+      <div class="iq-a">
+        <p><strong>Method Overloading</strong> — same method name, different parameter types/counts. TypeScript supports it via <em>overload signatures</em> (multiple signatures + one implementation body). This is compile-time (static) polymorphism.</p>
+        <p><strong>Method Overriding</strong> — a subclass provides a new implementation for a parent class method. TypeScript supports it fully with <code>override</code> keyword (TS 4.3+). This is runtime (dynamic) polymorphism.</p>
+        <div class="cb"><div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">overload vs override</span></div><pre>
+<span class="cm">// OVERLOADING — multiple signatures, one body</span>
+<span class="kw">class</span> <span class="ty">Formatter</span> <span class="op">{</span>
+  <span class="fn">format</span><span class="op">(</span><span class="pr">value</span><span class="op">:</span> <span class="ty">string</span><span class="op">):</span> <span class="ty">string</span><span class="op">;</span>
+  <span class="fn">format</span><span class="op">(</span><span class="pr">value</span><span class="op">:</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">decimals</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">string</span><span class="op">;</span>
+  <span class="fn">format</span><span class="op">(</span><span class="pr">value</span><span class="op">:</span> <span class="ty">string</span> <span class="op">|</span> <span class="ty">number</span><span class="op">,</span> <span class="pr">decimals</span><span class="op">?:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">string</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="kw">typeof</span> <span class="pr">value</span> <span class="op">=== "</span><span class="st">number</span><span class="op">"</span>
+      <span class="op">?</span> <span class="pr">value</span><span class="op">.</span><span class="fn">toFixed</span><span class="op">(</span><span class="pr">decimals</span> <span class="op">??</span> <span class="nm">2</span><span class="op">)</span>
+      <span class="op">:</span> <span class="pr">value</span><span class="op">.</span><span class="fn">trim</span><span class="op">();</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="cm">// OVERRIDING — subclass redefines parent method</span>
+<span class="kw">class</span> <span class="ty">Animal</span>    <span class="op">{</span> <span class="fn">sound</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span> <span class="kw">return</span> <span class="op">"</span><span class="st">...</span><span class="op">"</span><span class="op">; } }</span>
+<span class="kw">class</span> <span class="ty">Dog</span> <span class="kw">extends</span> <span class="ty">Animal</span> <span class="op">{</span>
+  <span class="kw">override</span> <span class="fn">sound</span><span class="op">():</span> <span class="ty">string</span> <span class="op">{</span> <span class="kw">return</span> <span class="op">"</span><span class="st">Woof</span><span class="op">"</span><span class="op">; }</span>  <span class="cm">// TS 4.3+ override keyword</span>
+<span class="op">}</span>
+</pre></div>
+      </div>
+    </details>
+
+    <details class="iq">
+      <summary class="iq-q">
+        <span class="iq-num">Q05</span>
+        <span class="iq-text">What are TypeScript Decorators? Give a real-world use case.<span class="iq-tag tag-adv">Advanced</span></span>
+        <span class="iq-icon">+</span>
+      </summary>
+      <div class="iq-a">
+        <p>Decorators are functions that attach to classes, methods, properties, or parameters and can modify behavior via metadata. They use the <code>@name</code> syntax. They're heavily used in Angular, NestJS, and TypeORM.</p>
+        <p><strong>Real-world use cases:</strong> Route registration (<code>@Get('/users')</code>), database column mapping (<code>@Column()</code>), authentication guards (<code>@UseGuards(AuthGuard)</code>), validation (<code>@IsEmail()</code>), memoization, logging, retry logic.</p>
+        <div class="cb"><div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">memoize decorator</span></div><pre>
+<span class="kw">function</span> <span class="fn">Memoize</span><span class="op">(</span>
+  <span class="pr">_target</span><span class="op">:</span> <span class="ty">object</span><span class="op">,</span>
+  <span class="pr">key</span><span class="op">:</span> <span class="ty">string</span><span class="op">,</span>
+  <span class="pr">descriptor</span><span class="op">:</span> <span class="ty">PropertyDescriptor</span>
+<span class="op">):</span> <span class="ty">PropertyDescriptor</span> <span class="op">{</span>
+  <span class="kw">const</span> <span class="pr">original</span> <span class="op">=</span> <span class="pr">descriptor</span><span class="op">.</span><span class="pr">value</span><span class="op">;</span>
+  <span class="kw">const</span> <span class="pr">cache</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">Map</span><span class="op">&lt;</span><span class="ty">string</span><span class="op">,</span> <span class="ty">unknown</span><span class="op">&gt;();</span>
+
+  <span class="pr">descriptor</span><span class="op">.</span><span class="pr">value</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(...</span><span class="pr">args</span><span class="op">:</span> <span class="ty">unknown</span><span class="op">[]) {</span>
+    <span class="kw">const</span> <span class="pr">cacheKey</span> <span class="op">=</span> <span class="ty">JSON</span><span class="op">.</span><span class="fn">stringify</span><span class="op">(</span><span class="pr">args</span><span class="op">);</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="pr">cache</span><span class="op">.</span><span class="fn">has</span><span class="op">(</span><span class="pr">cacheKey</span><span class="op">))</span> <span class="kw">return</span> <span class="pr">cache</span><span class="op">.</span><span class="fn">get</span><span class="op">(</span><span class="pr">cacheKey</span><span class="op">);</span>
+    <span class="kw">const</span> <span class="pr">result</span> <span class="op">=</span> <span class="pr">original</span><span class="op">.</span><span class="fn">apply</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> <span class="pr">args</span><span class="op">);</span>
+    <span class="pr">cache</span><span class="op">.</span><span class="fn">set</span><span class="op">(</span><span class="pr">cacheKey</span><span class="op">,</span> <span class="pr">result</span><span class="op">);</span>
+    <span class="kw">return</span> <span class="pr">result</span><span class="op">;</span>
+  <span class="op">};</span>
+  <span class="kw">return</span> <span class="pr">descriptor</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">MathUtils</span> <span class="op">{</span>
+  <span class="de">@Memoize</span>
+  <span class="fn">fibonacci</span><span class="op">(</span><span class="pr">n</span><span class="op">:</span> <span class="ty">number</span><span class="op">):</span> <span class="ty">number</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="pr">n</span> <span class="op">&lt;=</span> <span class="nm">1</span><span class="op">)</span> <span class="kw">return</span> <span class="pr">n</span><span class="op">;</span>
+    <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="fn">fibonacci</span><span class="op">(</span><span class="pr">n</span><span class="op">-</span><span class="nm">1</span><span class="op">) +</span> <span class="kw">this</span><span class="op">.</span><span class="fn">fibonacci</span><span class="op">(</span><span class="pr">n</span><span class="op">-</span><span class="nm">2</span><span class="op">);</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+</pre></div>
+      </div>
+    </details>
+
+    <details class="iq">
+      <summary class="iq-q">
+        <span class="iq-num">Q06</span>
+        <span class="iq-text">What is the Liskov Substitution Principle? Give a TypeScript violation example.<span class="iq-tag tag-adv">Advanced</span></span>
+        <span class="iq-icon">+</span>
+      </summary>
+      <div class="iq-a">
+        <p>LSP states: if S is a subtype of T, objects of type T may be replaced with objects of type S without breaking the program. In plain terms: a subclass should be fully substitutable for its parent.</p>
+        <div class="cb"><div class="cb-head"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div><span class="cb-label">LSP violation then fix</span></div><pre>
+<span class="cm">// ❌ VIOLATION — Square breaks Rectangle's contract</span>
+<span class="kw">class</span> <span class="ty">Rectangle</span> <span class="op">{</span>
+  <span class="kw">constructor</span><span class="op">(</span><span class="kw">public</span> <span class="pr">width</span><span class="op">:</span><span class="ty">number</span><span class="op">,</span> <span class="kw">public</span> <span class="pr">height</span><span class="op">:</span><span class="ty">number</span><span class="op">) {}</span>
+  <span class="kw">get</span> <span class="fn">area</span><span class="op">():</span> <span class="ty">number</span> <span class="op">{</span> <span class="kw">return</span> <span class="kw">this</span><span class="op">.</span><span class="pr">width</span> <span class="op">*</span> <span class="kw">this</span><span class="op">.</span><span class="pr">height</span><span class="op">; }</span>
+<span class="op">}</span>
+
+<span class="kw">class</span> <span class="ty">Square</span> <span class="kw">extends</span> <span class="ty">Rectangle</span> <span class="op">{</span>
+  <span class="kw">set</span
