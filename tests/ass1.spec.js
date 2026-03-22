@@ -1,9 +1,12 @@
 const { test } = require("@playwright/test");
+const { randomInt } = require("crypto");
 
 test("Create a new User & Login", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
   const title = await page.title();
-  const email = "test9013@test.com";
+  const userId =
+    randomInt(1, 9) + randomInt(1, 9) + randomInt(1, 9) + randomInt(1, 9);
+  const email = `test${userId}@test.com`;
   const pwd = "Password@123";
   console.log("Page Tittle ", title);
 
