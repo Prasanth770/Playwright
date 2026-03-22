@@ -15,7 +15,7 @@ export default defineConfig({
       },
     ],
   ],
-  workers: 5,
+  workers: 1,
   retries: 1,
   projects: [
     {
@@ -25,6 +25,8 @@ export default defineConfig({
         headless: true,
         ...devices["Desktop Chrome"],
         screenshot: "off",
+        popup: "off",
+
         // trace: "on",
         // video: "retain-on-failure",
       },
