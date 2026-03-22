@@ -1,0 +1,43 @@
+trigger:
+  branches:
+    include:
+      - main
+      - master
+      - dev2-apple
+
+pr:
+  branches:
+    include:
+      - main
+      - master
+      - dev2-apple
+
+pool:
+  vmImage: "ubuntu-latest"
+
+jobs:
+  - job: test
+    timeoutInMinutes: 60
+    steps:
+      - checkout: self
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "lts/*"
+        displayName: "Setup Node.js"
+
+      - script: npm ci
+        displayName: "Install dependencies"
+
+      - script: npx playwright install --with-deps
+        displayName: "Install Playwright Browsers"
+
+      - script: npx playwright test
+        displayName: "Run Playwright tests"
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "playwright-report"
+          ArtifactName: "playwright-report"
+        condition: succeededOrFailed()
+        displayName: "Upload Playwright report"
