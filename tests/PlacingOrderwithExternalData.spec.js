@@ -4,8 +4,8 @@ const testdata = JSON.parse(
   JSON.stringify(require("../utils/PlacingOrderTestData.json"))
 );
 // json to String then string to JS - recommended
-test.describe.configure({ mode: "serial" });
-
+// test.describe.configure({ mode: "serial" });
+// test.describe("")
 for (const data of testdata) {
   test(`@Smoke Place order using testData ${data.iReqProductName1}`, async ({
     page,
