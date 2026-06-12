@@ -5,25 +5,25 @@ export default defineConfig({
   // outputDir: `reports/testrun_${crypto.randomUUID().slice(0, 4)}`,
   testDir: "./tests",
   timeout: 40 * 1000,
-  reporter: [["html"]],
-  reporter: [
-    ["line"], // Console output
-    [
-      "allure-playwright",
-      {
-        detail: true,
-        outputFolder: "allure-results",
-        suiteTitle: false,
-      },
-    ],
-    [
-      "html",
-      {
-        open: "always",
-      },
-    ],
-  ],
-  workers: 4,
+  reporter: ["html"],
+  // reporter: [
+  //   ["line"], // Console output
+  //   [
+  //     "allure-playwright",
+  //     {
+  //       detail: true,
+  //       outputFolder: "allure-results",
+  //       suiteTitle: false,
+  //     },
+  //   ],
+  //   [
+  //     "html",
+  //     {
+  //       // open: "always",
+  //     },
+  //   ],
+  // ],
+  workers: process.env.CI ?? 1,
   retries: 0,
   fullyParallel: true,
   projects: [
@@ -50,7 +50,7 @@ export default defineConfig({
       name: "chromium",
       use: {
         headless: true,
-        fullyParallel: true,
+        // fullyParallel: true,
       },
     },
   ],
