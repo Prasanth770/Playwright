@@ -42,9 +42,9 @@ export default defineConfig({
         headless: false,
         fullyParallel: true,
         workers: 4,
-        // ...devices["Desktop Chrome"],
+        ...devices["Desktop Chrome"],
         browserName: "chromium",
-        channel: "chrome",
+        // channel: "chrome",
         screenshot: "on",
         popup: "off",
 
