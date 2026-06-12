@@ -35,21 +35,30 @@ export default defineConfig({
   retries: 0,
   fullyParallel: true,
   projects: [
-    {
-      name: "Chrome",
-      use: {
-        // storageState: "path",
-        headless: false,
-        fullyParallel: true,
-        workers: 4,
-        ...devices["Desktop Chrome"],
-        browserName: "chromium",
-        // channel: "chrome",
-        screenshot: "on",
-        popup: "off",
+    // {
+    //   name: "Chrome",
+    //   use: {
+    //     // storageState: "path",
+    //     headless: false,
+    //     fullyParallel: true,
+    //     workers: 4,
+    //     ...devices["Desktop Chrome"],
+    //     browserName: "chromium",
+    //     // channel: "chrome",
+    //     screenshot: "on",
+    //     popup: "off",
 
-        // trace: "on",
-        // video: "retain-on-failure",
+    //     // trace: "on",
+    //     // video: "retain-on-failure",
+    //   },
+
+    // }
+    // },
+    {
+      name: "chromium",
+      use: {
+        headless: true,
+        fullyParallel: true,
       },
     },
   ],
