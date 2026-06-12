@@ -15,15 +15,10 @@ class DashboardPage {
   }
   async AddtoCart(productName) {
     for (let i = 0; i < (await this.allProductsNamesLoad.count()); i++) {
-      let pnameloop = await this.allProductsCards
-        .nth(i)
-        .locator("b")
-        .textContent();
+      const productCard = this.allProductsCards.nth(i);
+      const pnameloop = await productCard.locator("b").textContent();
       if (pnameloop === productName) {
-        await this.allProductsCards
-          .getByRole("button", { name: " Add To Cart" })
-          .nth(i)
-          .click();
+        await productCard.getByRole("button", { name: /Add To Cart/i }).click();
         break;
       }
     }

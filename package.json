@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
+    "test:ci": "npx playwright test --grep @Smoke",
     "Smoke": "npx playwright test --grep @Smoke",
     "report:clean": "rm -rf allure-results allure-report",
     "report:generate": "npx allure generate ./allure-results -o ./allure-report",

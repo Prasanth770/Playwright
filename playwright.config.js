@@ -1,11 +1,14 @@
 import { defineConfig, devices } from "@playwright/test";
-import { OutputFileType } from "typescript";
+// import { OutputFileType } from "typescript";
 
 export default defineConfig({
   // outputDir: `reports/testrun_${crypto.randomUUID().slice(0, 4)}`,
   testDir: "./tests",
+  testIgnore: ["**/dist/**"],
   timeout: 40 * 1000,
-  reporter: ["html"],
+  reporter: process.env.CI
+    ? [["list"], ["html", { open: "never" }]]
+    : [["html", { open: "never" }]],
   // reporter: [
   //   ["line"], // Console output
   //   [
@@ -23,8 +26,9 @@ export default defineConfig({
   //     },
   //   ],
   // ],
-  workers: process.env.CI ?? 1,
-  retries: 0,
+  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 1 : 0,
+  forbidOnly: !!process.env.CI,
   fullyParallel: true,
   projects: [
     // {

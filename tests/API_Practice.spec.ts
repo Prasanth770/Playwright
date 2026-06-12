@@ -3,7 +3,7 @@ import { test, expect, request } from "@playwright/test";
 let cat = "ladders";
 let toolid = 1709;
 
-test.describe.only("API Tests", () => {
+test.describe("API Tests", () => {
   test("API Status test", async ({}) => {
     const apiContext = await request.newContext();
     const responsce = await apiContext.get("/status");

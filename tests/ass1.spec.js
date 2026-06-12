@@ -1,7 +1,7 @@
 const { test } = require("@playwright/test");
 const { randomInt, randomUUID } = require("crypto");
 
-test.only("Create a new User & Login", async ({ page }) => {
+test("Create a new User & Login", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
   const title = await page.title();
   const userId = randomUUID().split("-")[0] + randomInt(1000, 9999).toString();

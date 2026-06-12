@@ -1,3 +1,5 @@
+const { expect } = require("@playwright/test");
+
 class CartPage {
   constructor(page) {
     this.page = page;
@@ -11,10 +13,7 @@ class CartPage {
   }
 
   async checkProductInCart(productName) {
-    const cartProductNames = await this.page
-      .locator(`h3:has-text('${productName}')`)
-      .isVisible();
-    // expect(cartProductNames).toBeTruthy();
+    await expect(this.page.locator(`h3:has-text('${productName}')`)).toBeVisible();
   }
 }
 
