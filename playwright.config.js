@@ -2,18 +2,10 @@ import { defineConfig, devices } from "@playwright/test";
 import { OutputFileType } from "typescript";
 
 export default defineConfig({
-  outputDir: `reports/testrun_${crypto.randomUUID().slice(0, 4)}`,
+  // outputDir: `reports/testrun_${crypto.randomUUID().slice(0, 4)}`,
   testDir: "./tests",
   timeout: 40 * 1000,
-  reporter: [
-    [
-      "html",
-      {
-        outputFolder: `reports/html-report_${crypto.randomUUID().slice(0, 4)}`,
-        open: "always",
-      },
-    ],
-  ],
+  reporter: [["html"]],
   reporter: [
     ["line"], // Console output
     [
