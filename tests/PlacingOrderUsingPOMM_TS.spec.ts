@@ -1,5 +1,5 @@
 import { Page, Locator, test, expect } from "@playwright/test";
-import { PageOjectsManager } from "../pageObjects/PageObjectsManager";
+import { PageOjectsManager } from "../PageObjects_TS/PageObjectsManager";
 
 test("Order Products", async ({ page }) => {
   //Variable declaration
